@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.lightBlue,
         appBar: AppBar(
-          title: Text("Move iT NQ"),
+          title: Text("McTexture"),
           backgroundColor: Colors.blue,
           elevation: 0.0,
           actions: <Widget>[
