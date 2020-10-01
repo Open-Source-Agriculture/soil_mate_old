@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:texture_app/screens/googlemaps/googlemaps.dart';
 import 'package:texture_app/services/auth.dart';
+
 
 class Home extends StatelessWidget {
 
@@ -20,6 +22,25 @@ class Home extends StatelessWidget {
             },
                 icon: Icon(Icons.person),
                 label: Text("Logout"))
+          ],
+        ),
+        body: Column(
+          children: <Widget>[
+            FlatButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()),
+                  );
+                },
+              icon: Icon(
+                Icons.edit_location
+              ),
+              label: Text(
+                'Tap to see location'
+              ),
+
+            )
           ],
         ),
       )
