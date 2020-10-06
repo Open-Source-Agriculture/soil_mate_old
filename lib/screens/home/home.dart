@@ -43,6 +43,28 @@ class Home extends StatelessWidget {
             )
           ],
         ),
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            FlatButton.icon(
+                onPressed: (){},
+                icon: Icon(Icons.add),
+                label: Text('Add'),
+            ),
+            FlatButton.icon(
+                onPressed: (){},
+                icon: Icon(Icons.file_upload),
+                label: Text('Export')),
+            FlatButton.icon(
+                onPressed: (){},
+                icon: Icon(Icons.insert_drive_file),
+                label: Text('Manage')),
+            FlatButton.icon(
+                onPressed: (){},
+                icon: Icon(Icons.more_vert),
+                label: Text(''))
+          ],
+        ),
       )
     );
   }
