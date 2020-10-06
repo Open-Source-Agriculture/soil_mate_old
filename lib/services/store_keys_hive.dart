@@ -7,4 +7,14 @@ import 'package:hive/hive.dart';
 // appBoxes.locationPoints.put(nextPointNum,{"lat": 120.1, "lon":-32.2, "texture":"lome"});
 // } else {
 // print("locationPoints Box closed");
+// }// if (appBoxes.locationPoints.isOpen){
+// nextPointNum = appBoxes.locationPoints.length + 1;
+// appBoxes.locationPoints.put(nextPointNum,{"lat": 120.1, "lon":-32.2, "texture":"lome"});
+// } else {
+// print("locationPoints Box closed");
+// }// if (appBoxes.locationPoints.isOpen){
+// nextPointNum = appBoxes.locationPoints.length + 1;
+// appBoxes.locationPoints.put(nextPointNum,{"lat": 120.1, "lon":-32.2, "texture":"lome"});
+// } else {
+// print("locationPoints Box closed");
 // }
