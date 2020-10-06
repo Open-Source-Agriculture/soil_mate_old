@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:texture_app/services/app_hive.dart';
 
 void main() => runApp(MyApp());
 
@@ -74,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Map<String,double>> getCurrentLocation() async {
-    double lat;
-    double lon;
+    double lat = sampledLat;
+    double lon = sampledLon;
     try {
 
       Uint8List imageData = await getMarker();
@@ -90,8 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       _locationSubscription = _locationTracker.onLocationChanged.listen((newLocalData) {
         if (_controller != null) {
-          lat = newLocalData.latitude;
-          lon = newLocalData.longitude;
+          sampledLat = newLocalData.latitude;
+          sampledLon = newLocalData.longitude;
           _controller.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
               bearing: 192.8334901395799,
               target: LatLng(lat, lon),
@@ -160,11 +161,15 @@ class _MyHomePageState extends State<MyHomePage> {
             print("Pressed");
             print(sampledLat);
             print(sampledLon);
-            Future<Map<String,double>> currentLocation = getCurrentLocation();
+            Future<Map<String,double>> currentLocation =  getCurrentLocation();
             currentLocation.then((Map<String,double> locationDict){
               setState(() {
-                sampledLat = locationDict[LAT];
-                sampledLon = locationDict[LON];
+                print(locationDict.toString());
+                if (locationDict[LAT] != null){
+                  sampledLat = locationDict[LAT];
+                  sampledLon = locationDict[LON];
+                }
+
               });
             });
 
