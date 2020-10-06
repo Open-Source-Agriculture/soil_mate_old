@@ -7,6 +7,9 @@ import 'package:location/location.dart';
 
 void main() => runApp(MyApp());
 
+String LAT = 'lat';
+String LON = 'lon';
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Marker marker;
   Circle circle;
   GoogleMapController _controller;
+  double sampledLat = 37.42796133580664;
+  double sampledLon = -122.085749655962;
 
   static final CameraPosition initialLocation = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -68,7 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void getCurrentLocation() async {
+  Future<Map<String,double>> getCurrentLocation() async {
+    double lat;
+    double lon;
     try {
 
       Uint8List imageData = await getMarker();
@@ -83,9 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
       _locationSubscription = _locationTracker.onLocationChanged.listen((newLocalData) {
         if (_controller != null) {
+          lat = newLocalData.latitude;
+          lon = newLocalData.longitude;
           _controller.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
               bearing: 192.8334901395799,
-              target: LatLng(newLocalData.latitude, newLocalData.longitude),
+              target: LatLng(lat, lon),
               tilt: 0,
               zoom: 18.00)));
           updateMarkerAndCircle(newLocalData, imageData);
@@ -97,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         debugPrint("Permission Denied");
       }
     }
+    return {LAT:lat, LON: lon};
   }
 
   @override
@@ -113,20 +123,51 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: initialLocation,
-        markers: Set.of((marker != null) ? [marker] : []),
-        circles: Set.of((circle != null) ? [circle] : []),
-        onMapCreated: (GoogleMapController controller) {
-          _controller = controller;
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,  // or use fixed size like 200
+              height: MediaQuery.of(context).size.height*0.3,
+              child: GoogleMap(
 
+                mapType: MapType.hybrid,
+                initialCameraPosition: initialLocation,
+                markers: Set.of((marker != null) ? [marker] : []),
+                circles: Set.of((circle != null) ? [circle] : []),
+                onMapCreated: (GoogleMapController controller) {
+                  _controller = controller;
+                },
+
+              ),
+            ),
+            Text('Texture Class'),
+            Row(
+              children: [
+                FlatButton(
+                  child: Text('Sandy Loam'),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.location_searching),
           onPressed: () {
-            getCurrentLocation();
+            print("Pressed");
+            print(sampledLat);
+            print(sampledLon);
+            Future<Map<String,double>> currentLocation = getCurrentLocation();
+            currentLocation.then((Map<String,double> locationDict){
+              setState(() {
+                sampledLat = locationDict[LAT];
+                sampledLon = locationDict[LON];
+              });
+            });
+
           }),
     );
   }
