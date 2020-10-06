@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:texture_app/services/app_hive.dart';
+import 'package:texture_app/models/sample.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -41,6 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
   GoogleMapController _controller;
   double sampledLat = 37.42796133580664;
   double sampledLon = -122.085749655962;
+  List<Sample> samples = [];
+
+
 
   static final CameraPosition initialLocation = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -168,6 +173,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (locationDict[LAT] != null){
                   sampledLat = locationDict[LAT];
                   sampledLon = locationDict[LON];
+                  Sample s = Sample(
+                      lat: sampledLon,
+                      lon: sampledLon,
+                    textureClass: "lome",
+                    depthShallow: 0,
+                    depthDeep: 10,
+                    sand: 20,
+                    silt: 30,
+                    clay: 50
+                  );
+                  print(s.getData().toString());
+                  samples.add(s);
+                  print(samples.toString());
                 }
 
               });
