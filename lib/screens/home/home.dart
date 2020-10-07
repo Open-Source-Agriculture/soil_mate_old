@@ -2,22 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:texture_app/screens/home/exportscreen.dart';
 import 'package:texture_app/screens/home/addsample.dart';
 import 'package:texture_app/screens/home/managescreen.dart';
+import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/services/auth.dart';
 import 'package:texture_app/services/site_database.dart';
 import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/sample.dart';
 import 'package:texture_app/models/common_keys.dart';
 import 'package:texture_app/screens/home/site_overview.dart';
+import 'dart:async';
 
-class Home extends StatelessWidget {
 
+class Home extends StatefulWidget {
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+  List<Site> allSites = [];
+  bool dataLoaded = false;
+
 
   @override
   Widget build(BuildContext context) {
-//    //Add samples to sites
+    //Add samples to sites
 //    Site iSite = Site(
-//        name: "Moiis Paddock",
+//        name: "Hephzi Paddock",
 //        classification: "aus",
 //        rawSamples: []
 //    );
@@ -36,8 +47,27 @@ class Home extends StatelessWidget {
 //    if (alreadySite){
 //      print("Cant use this name; already exists");
 //    }
-    List<Site> allSites =  getSites();
-    print(allSites);
+    Future<void> loadData() async {
+      this.allSites = await getSites();
+      print(this.allSites);
+      dataLoaded = true;
+      setState(() {});
+    }
+    if (!dataLoaded){
+      loadData();
+    }
+
+
+
+//    print(this.allSites.length);
+//    if (this.allSites.length == 0){
+//      print("loading");
+//      setState(() {
+//        this.allSites = getSites();
+//      });
+//    }
+
+
     List<dynamic> allSitesNames = allSites.map((s) => s.name).toList();
     print(allSitesNames);
 

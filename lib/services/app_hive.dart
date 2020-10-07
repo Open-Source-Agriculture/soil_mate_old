@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 
@@ -17,8 +18,9 @@ class AppBoxes {
   }
 
   Future<Object> load() async {
-    var dir = await getApplicationDocumentsDirectory();
-    Hive.init(dir.path);
+    await Hive.initFlutter();
+//    var dir = await getApplicationDocumentsDirectory();
+//    Hive.init(dir.path);
 
     await Hive.openBox('siteBox');
     siteBox = Hive.box('siteBox');
