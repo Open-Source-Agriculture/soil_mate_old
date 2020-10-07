@@ -1,14 +1,18 @@
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/common_keys.dart';
+import 'dart:async';
 
-List<Site> getSites(){
+
+
+Future<List<Site>> getSites() async {
   List<Site> sites = [];
+  await appBoxes.load();
   if (appBoxes.isLoaded){
     if (appBoxes.siteBox.isNotEmpty){
-//      print(appBoxes.siteBox.length);
+      print(appBoxes.siteBox.length);
 //      print(appBoxes.siteBox.values);
-//      print(appBoxes.siteBox.keys);
+      print(appBoxes.siteBox.keys);
       sites  = appBoxes.siteBox.keys.toList().map((e) => Site(
           name: appBoxes.siteBox.get(e)[SITE_NAME],
           classification: appBoxes.siteBox.get(e)[TEXTURE_CLACIFICATION],
@@ -16,6 +20,8 @@ List<Site> getSites(){
       )).toList();
 
     }
+  }else{
+    print("False");
   }
   return sites;
 }
