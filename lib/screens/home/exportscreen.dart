@@ -16,6 +16,7 @@ class _ExportScreenState extends State<ExportScreen> {
       child: Scaffold(
         primary: true,
         appBar: new AppBar(
+          title: Text('Export'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -77,6 +78,7 @@ class _ExportScreenState extends State<ExportScreen> {
                 ],
               ),
               FlatButton(
+                color: Colors.blue,
                   onPressed: (){},
                   child:
                   Text('Export'),)

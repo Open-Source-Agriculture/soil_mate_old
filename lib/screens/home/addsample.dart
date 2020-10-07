@@ -19,13 +19,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Texture app Google Maps'),
+      home: MyHomePage(title: 'Add Sample'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title = 'Texture app Google Maps'}) : super(key: key);
+  MyHomePage({Key key, this.title = 'Add Sample'}) : super(key: key);
   final String title;
 
   @override

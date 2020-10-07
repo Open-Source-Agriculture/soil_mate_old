@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.lightBlue,
         appBar: AppBar(
-          title: Text("McTexture"),
+          title: Text("Home"),
           backgroundColor: Colors.blue,
           elevation: 0.0,
           actions: <Widget>[
