@@ -22,13 +22,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Texture app Google Maps'),
+
+      home: MyHomePage(title: 'Add Sample'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title = 'Texture app Google Maps'}) : super(key: key);
+
+  MyHomePage({Key key, this.title = 'Add Sample'}) : super(key: key);
+
   final String title;
 
   @override
@@ -44,7 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
   double sampledLat = 37.42796133580664;
   double sampledLon = -122.085749655962;
   List<Sample> samples = [];
-
 
 
   static final CameraPosition initialLocation = CameraPosition(
@@ -82,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<Map<String,double>> getCurrentLocation() async {
     double lat = sampledLat;
     double lon = sampledLon;
+
     try {
 
       Uint8List imageData = await getMarker();
@@ -98,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if (_controller != null) {
           sampledLat = newLocalData.latitude;
           sampledLon = newLocalData.longitude;
+
           _controller.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
               bearing: 192.8334901395799,
               target: LatLng(lat, lon),
@@ -187,6 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   samples.add(s);
                   print(samples.toString());
                 }
+
 
               });
             });
