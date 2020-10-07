@@ -6,3 +6,7 @@ String DEPTHDEEP = 'depth_deep';
 String SAND = 'sand';
 String SILT = 'silt';
 String CLAY = 'clay';
+
+String SITE_NAME = 'siteName';
+String TEXTURE_CLACIFICATION = 'texture_calcification';
+String SAMPLES = "samples";

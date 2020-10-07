@@ -9,7 +9,8 @@ class AppBoxes {
 
   bool isLoaded = false;
   Box userBox;
-  Box eventBox;
+  Box queSiteBox;
+  Box siteBox;
 
   AppBoxes(){
     load();
@@ -18,10 +19,16 @@ class AppBoxes {
   Future<Object> load() async {
     var dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
-    await Hive.openBox('eventBox');
-    eventBox = Hive.box('eventBox');
+
+    await Hive.openBox('siteBox');
+    siteBox = Hive.box('siteBox');
+
+    await Hive.openBox('queSiteBox');
+    queSiteBox = Hive.box('queSiteBox');
+
     await Hive.openBox('userBox');
     userBox = Hive.box('userBox');
+
     isLoaded = true;
 
   }
