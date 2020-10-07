@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:texture_app/screens/googlemaps/googlemaps.dart';
+import 'package:texture_app/screens/home/addsample.dart';
 import 'package:texture_app/services/auth.dart';
 
 
