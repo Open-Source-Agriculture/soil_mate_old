@@ -22,9 +22,12 @@ class AppBoxes {
 
     await Hive.openBox('siteBox');
     siteBox = Hive.box('siteBox');
+    siteBox.clear();
+
 
     await Hive.openBox('queSiteBox');
     queSiteBox = Hive.box('queSiteBox');
+    queSiteBox.clear();
 
     await Hive.openBox('userBox');
     userBox = Hive.box('userBox');

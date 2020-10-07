@@ -6,12 +6,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/models/sample.dart';
-
+import 'package:texture_app/models/common_keys.dart';
 
 void main() => runApp(MyApp());
 
-String LAT = 'lat';
-String LON = 'lon';
 
 class MyApp extends StatelessWidget {
   @override

@@ -3,7 +3,9 @@ import 'package:texture_app/screens/home/exportscreen.dart';
 import 'package:texture_app/screens/home/addsample.dart';
 import 'package:texture_app/screens/home/managescreen.dart';
 import 'package:texture_app/services/auth.dart';
-
+import 'package:texture_app/services/site_database.dart';
+import 'package:texture_app/models/site.dart';
+import 'package:texture_app/models/common_keys.dart';
 
 class Home extends StatelessWidget {
 
@@ -34,10 +36,26 @@ class Home extends StatelessWidget {
                 child: Card(
                   child: ListTile(
                     onTap: () {
-                      // updateTime(index);
+                      Site iSite = Site({
+                        SITE_NAME: DateTime.now().toIso8601String(),
+                        TEXTURE_CLACIFICATION: "aus",
+                        SAMPLES: [{
+                          LAT: 20493870.0,
+                          LON: 23894.0,
+                          TEXTURECLASS: "lome",
+                          DEPTHSHALLOW: 0,
+                          DEPTHDEEP: 10,
+                          SAND: 30,
+                          SILT: 20,
+                          CLAY: 50,
+                        }]
+                      });
+                      saveSite(iSite);
+                      List<Site> allSites =  getSites();
+                      allSites.map((s) => print(s.name));
                     },
                     // title: Text(locations[index].location),
-                    title: Text('Site One'),
+                    title: Text("Site One"),
                     /*leading: Text('1') CircleAvatar(
                       backgroundImage: AssetImage('assets/${locations[index].flag}'),
                     ),*/
