@@ -20,3 +20,15 @@ List<Site> getSites(){
   return sites;
 }
 
+void saveSite(Site site){
+  if (appBoxes.isLoaded){
+    Map<String, dynamic> siteMap = {
+      SITE_NAME: site.name,
+      TEXTURE_CLACIFICATION: site.classification,
+      DATE: site.date,
+      SAMPLES: site.samples.map((s) => s.getData())
+    };
+    appBoxes.queSiteBox.add(siteMap);
+    appBoxes.siteBox.add(siteMap);
+  }
+}

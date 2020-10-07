@@ -10,3 +10,4 @@ String CLAY = 'clay';
 String SITE_NAME = 'siteName';
 String TEXTURE_CLACIFICATION = 'texture_calcification';
 String SAMPLES = "samples";
+String DATE = "date";
