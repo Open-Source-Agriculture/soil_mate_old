@@ -10,13 +10,14 @@ class Site{
   List<Sample> samples = [];
   var defaultList;
 
-  Site(Map e){
-    this.name = e[SITE_NAME];
-    this.classification = e[TEXTURE_CLACIFICATION];
-    this.rawSamples = e[SAMPLES].toList();
-    this.samples = [];
-    print("rawSamples");
-    print(this.rawSamples);
+
+
+  Site({this.name, this.classification, this.rawSamples}){
+//    this.name = name;
+//    this.classification = classification;// e[TEXTURE_CLACIFICATION];
+//    this.rawSamples = rawSamples;// e[SAMPLES].toList();
+//    print("rawSamples");
+//    print(this.rawSamples);
     this.rawSamples = this.rawSamples.map((rawSample) => rawSample).toList();
     List<Sample> mysamples = this.rawSamples.map((e) => Sample(
       lat: e[LAT],
@@ -29,7 +30,6 @@ class Site{
       clay: e[CLAY]
 
     )).toList();
-    print(mysamples);
     samples = mysamples;
   }
 

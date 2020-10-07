@@ -6,20 +6,25 @@ List<Site> getSites(){
   List<Site> sites = [];
   if (appBoxes.isLoaded){
     if (appBoxes.siteBox.isNotEmpty){
-      print(appBoxes.siteBox.length);
-      print(appBoxes.siteBox.values);
-      print(appBoxes.siteBox.keys);
-      sites  = appBoxes.siteBox.values.toList().map((e) => Site(e)).toList();
+//      print(appBoxes.siteBox.length);
+//      print(appBoxes.siteBox.values);
+//      print(appBoxes.siteBox.keys);
+      sites  = appBoxes.siteBox.keys.toList().map((e) => Site(
+          name: appBoxes.siteBox.get(e)[SITE_NAME],
+          classification: appBoxes.siteBox.get(e)[TEXTURE_CLACIFICATION],
+          rawSamples: appBoxes.siteBox.get(e)[SAMPLES].toList()
+      )).toList();
+
     }
   }
   return sites;
 }
 
 void saveSite(Site site){
-  print(site.name);
-  print(site.classification);
-  print(site.date);
-  print(site.samples.map((s) => s.getData()).toList());
+//  print(site.name);
+//  print(site.classification);
+//  print(site.date);
+//  print(site.samples.map((s) => s.getData()).toList());
   if (appBoxes.isLoaded){
     Map<String, dynamic> siteMap = {
       SITE_NAME: site.name,
@@ -27,7 +32,7 @@ void saveSite(Site site){
       DATE: site.date,
       SAMPLES: site.samples.map((s) => s.getData()).toList()
     };
-    print(siteMap.toString());
+//    print(siteMap.toString());
     appBoxes.queSiteBox.put(site.name,siteMap);
     appBoxes.siteBox.put(site.name, siteMap);
   }

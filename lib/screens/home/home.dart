@@ -36,23 +36,16 @@ class Home extends StatelessWidget {
                 child: Card(
                   child: ListTile(
                     onTap: () {
-                      Site iSite = Site({
-                        SITE_NAME: DateTime.now().toIso8601String(),
-                        TEXTURE_CLACIFICATION: "aus",
-                        SAMPLES: [{
-                          LAT: 20493870.0,
-                          LON: 23894.0,
-                          TEXTURECLASS: "lome",
-                          DEPTHSHALLOW: 0,
-                          DEPTHDEEP: 10,
-                          SAND: 30,
-                          SILT: 20,
-                          CLAY: 50,
-                        }]
-                      });
+                      Site iSite = Site(
+                        name: DateTime.now().toIso8601String(),
+                        classification: "aus",
+                        rawSamples: []
+                      );
                       saveSite(iSite);
                       List<Site> allSites =  getSites();
-                      allSites.map((s) => print(s.name));
+                      print(allSites);
+                      List<String> allSitesNames = allSites.map((s) => s.name).toList();
+                      print(allSitesNames);
                     },
                     // title: Text(locations[index].location),
                     title: Text("Site One"),
