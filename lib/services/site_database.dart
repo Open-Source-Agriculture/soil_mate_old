@@ -20,7 +20,8 @@ List<Site> getSites(){
   return sites;
 }
 
-void saveSite(Site site){
+bool saveSite(Site site){
+  bool siteExists = false;
 //  print(site.name);
 //  print(site.classification);
 //  print(site.date);
@@ -33,7 +34,12 @@ void saveSite(Site site){
       SAMPLES: site.samples.map((s) => s.getData()).toList()
     };
 //    print(siteMap.toString());
-    appBoxes.queSiteBox.put(site.name,siteMap);
-    appBoxes.siteBox.put(site.name, siteMap);
+    if (!appBoxes.siteBox.containsKey(site.name)){
+      appBoxes.queSiteBox.put(site.name,siteMap);
+      appBoxes.siteBox.put(site.name, siteMap);
+    }else{
+      siteExists = true;
+    }
   }
+  return siteExists;
 }

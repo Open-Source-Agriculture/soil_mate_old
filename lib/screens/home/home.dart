@@ -13,6 +13,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Scaffold(
         backgroundColor: Colors.lightBlue,
@@ -37,15 +38,18 @@ class Home extends StatelessWidget {
                   child: ListTile(
                     onTap: () {
                       Site iSite = Site(
-                        name: DateTime.now().toIso8601String(),
+                        name: "Bobs Paddock",
                         classification: "aus",
                         rawSamples: []
                       );
-                      saveSite(iSite);
-                      List<Site> allSites =  getSites();
-                      print(allSites);
-                      List<String> allSitesNames = allSites.map((s) => s.name).toList();
-                      print(allSitesNames);
+                      bool alreadySite = saveSite(iSite);
+                      if (alreadySite){
+                        print("Cant use this name; already exists");
+                      }
+//                      List<Site> allSites =  getSites();
+//                      print(allSites);
+//                      List<String> allSitesNames = allSites.map((s) => s.name).toList();
+//                      print(allSitesNames);
                     },
                     // title: Text(locations[index].location),
                     title: Text("Site One"),
