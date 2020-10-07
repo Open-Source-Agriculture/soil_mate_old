@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:texture_app/models/user.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApp(
+    
+  ));
 }
 
 class MyApp extends StatelessWidget {

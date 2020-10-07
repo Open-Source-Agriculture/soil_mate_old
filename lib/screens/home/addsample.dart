@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:texture_app/models/texture_models.dart';
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/models/sample.dart';
-import 'package:texture_app/models/common_keys.dart';
+  import 'package:texture_app/models/common_keys.dart';
 
 void main() => runApp(MyApp());
 
@@ -45,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
   double sampledLat = 37.42796133580664;
   double sampledLon = -122.085749655962;
   List<Sample> samples = [];
+  int depthUpper = 0;
+  int depthLower = 10;
 
 
   static final CameraPosition initialLocation = CameraPosition(
@@ -127,6 +130,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
+    var txt2 = TextEditingController();
+    txt2.text = depthUpper.toString();
+    txt2.selection = TextSelection.fromPosition(TextPosition(offset: depthUpper.toString().length));
+
+    var txt3 = TextEditingController();
+    txt3.text = depthLower.toString();
+    txt3.selection = TextSelection.fromPosition(TextPosition(offset: depthLower.toString().length));
+
+    AusClassification ausClassification = AusClassification();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -155,8 +170,96 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               children: [
                 FlatButton(
-                  child: Text('Sandy Loam'),
+                  color: Colors.grey[300],
+                  child: Text(ausClassification.sandyLoam.name),
+                ),
+                FlatButton(
+                  color: Colors.grey[300],
+                  child: Text(ausClassification.loam.name),
+                ),
+                FlatButton(
+                  color: Colors.grey[300],
+                  child: Text(ausClassification.sandyClay.name),
                 )
+              ],
+            ),
+            Row(
+              children: [
+                FlatButton(
+                  color: Colors.grey[300],
+                  child: Text(ausClassification.clay.name),
+                ),
+                FlatButton(
+                  color: Colors.grey[300],
+                  child: Text(ausClassification.siltyClay.name),
+                ),
+                FlatButton(
+                  color: Colors.grey[300],
+                  child: Text(ausClassification.siltyLoam.name),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Text('Depth Range '),
+                ConstrainedBox(
+                  constraints: BoxConstraints.tight(Size(55, 55)),
+                  child: TextFormField(
+                    maxLength: 3,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        counterText: ''
+                    ),
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Oswald',
+                      color: Color(0xB3383838),
+                    ),
+                    // initialValue: att.toString(),
+                    controller: txt2,
+                    // inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                    autovalidate: true,
+                    keyboardType: TextInputType.number,
+                    onChanged: (val){
+                      setState(() {
+                        depthUpper = int.parse(val);
+                        print(depthUpper);
+                      });
+
+                    },
+                  ),
+                ),
+                Text('to'),
+                ConstrainedBox(
+                  constraints: BoxConstraints.tight(Size(55, 55)),
+                  child: TextFormField(
+                    maxLength: 3,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        counterText: ''
+                    ),
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Oswald',
+                      color: Color(0xB3383838),
+                    ),
+                    // initialValue: att.toString(),
+                    controller: txt3,
+                    // inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                    autovalidate: true,
+                    keyboardType: TextInputType.number,
+                    onChanged: (val){
+                      setState(() {
+                        depthLower = int.parse(val);
+                        print(depthLower);
+                      });
+
+                    },
+                  ),
+                ),
+                Text(' cm'),
               ],
             ),
           ],
