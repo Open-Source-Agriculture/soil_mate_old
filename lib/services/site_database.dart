@@ -8,7 +8,7 @@ List<Site> getSites(){
     if (appBoxes.siteBox.isNotEmpty){
       print(appBoxes.siteBox.length);
       List<String> siteKeys = appBoxes.siteBox.keys;
-      List<Map<String,dynamic>> siteInfo = sites.map((e) => appBoxes.siteBox.get(e));
+      List<Map<String,dynamic>> siteInfo = siteKeys.map((e) => appBoxes.siteBox.get(e));
 
       sites = siteInfo.map((si) => Site(
         name: si[SITE_NAME],
@@ -19,3 +19,4 @@ List<Site> getSites(){
   }
   return sites;
 }
+
