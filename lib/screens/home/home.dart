@@ -5,7 +5,9 @@ import 'package:texture_app/screens/home/managescreen.dart';
 import 'package:texture_app/services/auth.dart';
 import 'package:texture_app/services/site_database.dart';
 import 'package:texture_app/models/site.dart';
+import 'package:texture_app/models/sample.dart';
 import 'package:texture_app/models/common_keys.dart';
+import 'package:texture_app/screens/home/site_overview.dart';
 
 class Home extends StatelessWidget {
 
@@ -13,6 +15,31 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+//    //Add samples to sites
+//    Site iSite = Site(
+//        name: "Moiis Paddock",
+//        classification: "aus",
+//        rawSamples: []
+//    );
+//    Sample s = Sample(
+//        lat: 123.0,
+//        lon: -33.0,
+//        textureClass: "lome",
+//        depthShallow: 0,
+//        depthDeep: 10,
+//        sand: 20,
+//        silt: 30,
+//        clay: 50
+//    );
+//    iSite.addSample(s);
+//    bool alreadySite = saveSite(iSite);
+//    if (alreadySite){
+//      print("Cant use this name; already exists");
+//    }
+    List<Site> allSites =  getSites();
+    print(allSites);
+    List<dynamic> allSitesNames = allSites.map((s) => s.name).toList();
+    print(allSitesNames);
 
     return Container(
       child: Scaffold(
@@ -30,29 +57,21 @@ class Home extends StatelessWidget {
           ],
         ),
         body: ListView.builder(
-            // itemCount: locations.length,
+            itemCount: allSites.length,
             itemBuilder: (context, index){
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
                 child: Card(
                   child: ListTile(
                     onTap: () {
-                      Site iSite = Site(
-                        name: "Bobs Paddock",
-                        classification: "aus",
-                        rawSamples: []
+                      Navigator.push(context,
+                      MaterialPageRoute(
+                        builder: (context) => SiteOverviewPage(site: allSites[index],),
+                      ),
                       );
-                      bool alreadySite = saveSite(iSite);
-                      if (alreadySite){
-                        print("Cant use this name; already exists");
-                      }
-//                      List<Site> allSites =  getSites();
-//                      print(allSites);
-//                      List<String> allSitesNames = allSites.map((s) => s.name).toList();
-//                      print(allSitesNames);
                     },
                     // title: Text(locations[index].location),
-                    title: Text("Site One"),
+                    title: Text(allSites[index].name),
                     /*leading: Text('1') CircleAvatar(
                       backgroundImage: AssetImage('assets/${locations[index].flag}'),
                     ),*/
