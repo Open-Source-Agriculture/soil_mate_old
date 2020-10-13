@@ -12,6 +12,8 @@ import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/sample.dart';
 import 'package:texture_app/services/site_database.dart';
 
+import 'date.dart';
+
 void main() => runApp(MyApp());
 
 
@@ -176,33 +178,41 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text('Texture Class'),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FlatButton(
                   color: Colors.grey[300],
+                  onPressed: () {  },
                   child: Text(ausClassification.sandyLoam.name),
                 ),
                 FlatButton(
                   color: Colors.grey[300],
+                  onPressed: () {  },
                   child: Text(ausClassification.loam.name),
                 ),
                 FlatButton(
                   color: Colors.grey[300],
+                  onPressed: () {  },
                   child: Text(ausClassification.sandyClay.name),
                 )
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FlatButton(
                   color: Colors.grey[300],
+                  onPressed: () {  },
                   child: Text(ausClassification.clay.name),
                 ),
                 FlatButton(
                   color: Colors.grey[300],
+                  onPressed: () {  },
                   child: Text(ausClassification.siltyClay.name),
                 ),
                 FlatButton(
                   color: Colors.grey[300],
+                  onPressed: () {  },
                   child: Text(ausClassification.siltyLoam.name),
                 )
               ],
@@ -269,6 +279,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Text(' cm'),
               ],
+            ),
+            FlatButton(
+              color: Colors.blue,
+              child: Text('Date'),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DatePickerDemo()),
+                );
+              },
             ),
           ],
         ),
