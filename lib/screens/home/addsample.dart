@@ -7,7 +7,10 @@ import 'package:location/location.dart';
 import 'package:texture_app/models/texture_models.dart';
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/models/sample.dart';
-  import 'package:texture_app/models/common_keys.dart';
+import 'package:texture_app/models/common_keys.dart';
+import 'package:texture_app/models/site.dart';
+import 'package:texture_app/models/sample.dart';
+import 'package:texture_app/services/site_database.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Sample> samples = [];
   int depthUpper = 0;
   int depthLower = 10;
+  Site site;
 
 
   static final CameraPosition initialLocation = CameraPosition(
@@ -130,7 +134,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
+    site = Site(
+      name: DateTime.now().toIso8601String(),
+      classification: "Aus",
+      rawSamples: []
+    );
 
 
     var txt2 = TextEditingController();
@@ -282,15 +290,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       lat: sampledLon,
                       lon: sampledLon,
                     textureClass: "lome",
-                    depthShallow: 0,
+                    depthShallow: 2,
                     depthDeep: 10,
                     sand: 20,
                     silt: 30,
                     clay: 50
                   );
                   print(s.getData().toString());
-                  samples.add(s);
-                  print(samples.toString());
+                  site.addSample(s);
+                  print(site.samples);
+//                  saveSite(site);
+
                 }
 
 

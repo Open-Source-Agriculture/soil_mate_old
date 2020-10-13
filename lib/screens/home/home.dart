@@ -27,26 +27,26 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //Add samples to sites
-//    Site iSite = Site(
-//        name: "Hephzi Paddock",
-//        classification: "aus",
-//        rawSamples: []
-//    );
-//    Sample s = Sample(
-//        lat: 123.0,
-//        lon: -33.0,
-//        textureClass: "lome",
-//        depthShallow: 0,
-//        depthDeep: 10,
-//        sand: 20,
-//        silt: 30,
-//        clay: 50
-//    );
-//    iSite.addSample(s);
-//    bool alreadySite = saveSite(iSite);
-//    if (alreadySite){
-//      print("Cant use this name; already exists");
-//    }
+    Site iSite = Site(
+        name: "Kips Paddock",
+        classification: "aus",
+        rawSamples: []
+    );
+    Sample s = Sample(
+        lat: 123.0,
+        lon: -33.0,
+        textureClass: "lome",
+        depthShallow: 0,
+        depthDeep: 10,
+        sand: 20,
+        silt: 30,
+        clay: 50
+    );
+    iSite.addSample(s);
+    bool alreadySite = saveSite(iSite);
+    if (alreadySite){
+      print("Cant use this name; already exists");
+    }
     Future<void> loadData() async {
       this.allSites = await getSites();
       print(this.allSites);
