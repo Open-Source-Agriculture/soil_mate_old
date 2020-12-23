@@ -291,17 +291,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   print(s.getData().toString());
                   site.addSample(s);
                   print(site.samples.map((e) => e.textureClass));
-                  overrideSite(site);
+                  Future<void> saveDataPushHome() async {
+                    await overrideSite(site);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  }
+                  saveDataPushHome();
 
+                } else {
+                  print('no gps data');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                  );
                 }
 
 
               });
             });
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
+
 
           }),
     );

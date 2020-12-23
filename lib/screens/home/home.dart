@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
   List<Site> allSites = [];
   bool dataLoaded = false;
   String baseSiteKey =  "BaseSite";
+  List<Sample> baseSamples = [];
 
 
   @override
@@ -48,7 +49,7 @@ class _HomeState extends State<Home> {
 //      print(allSitesNames);
       List<dynamic> baseSiteList = allSites.where((s) => s.name == baseSiteKey).toList();
       Site baseSite = baseSiteList[0];
-      List<Sample> baseSamples = baseSite.samples;
+      baseSamples = baseSite.samples;
       print("baseSamples");
       print(baseSamples);
       setState(() {});
@@ -56,6 +57,13 @@ class _HomeState extends State<Home> {
     if (!dataLoaded){
       print("trying to load");
       loadData();
+    }
+
+
+    Future<void> deleteSamples() async {
+      overrideSite(iSite);
+      loadData();
+
     }
 
 
@@ -81,21 +89,18 @@ class _HomeState extends State<Home> {
           ],
         ),
         body: ListView.builder(
-            itemCount: allSites.length,
+            itemCount: baseSamples.length,
             itemBuilder: (context, index){
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
                 child: Card(
                   child: ListTile(
                     onTap: () {
-                      Navigator.push(context,
-                      MaterialPageRoute(
-                        builder: (context) => SiteOverviewPage(site: allSites[index],),
-                      ),
-                      );
+                      print("Nothing");
                     },
                     // title: Text(locations[index].location),
-                    title: Text(allSites[index].name),
+                    title: Text(baseSamples[index].textureClass),
+                    subtitle: Text(baseSamples[index].sand.toString()),
                     /*leading: Text('1') CircleAvatar(
                       backgroundImage: AssetImage('assets/${locations[index].flag}'),
                     ),*/
@@ -120,10 +125,13 @@ class _HomeState extends State<Home> {
             FlatButton.icon(
               onPressed: (){
                 print("will delete");
-//                print(baseSamples);
+                print(baseSamples);
+                deleteSamples();
+
               },
               icon: Icon(Icons.delete),
               label: Text('Delete All'),
+
             ),
           ],
         ),
