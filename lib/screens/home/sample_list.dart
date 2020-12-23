@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:texture_app/screens/home/exportscreen.dart';
-import 'package:texture_app/screens/home/addsample.dart';
+import 'package:texture_app/screens/home/add_sample.dart';
 import 'package:texture_app/screens/home/managescreen.dart';
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/services/auth.dart';
@@ -12,13 +12,13 @@ import 'package:texture_app/screens/home/site_overview.dart';
 import 'dart:async';
 
 
-class Home extends StatefulWidget {
+class SampleList extends StatefulWidget {
 
   @override
-  _HomeState createState() => _HomeState();
+  _SampleListState createState() => _SampleListState();
 }
 
-class _HomeState extends State<Home> {
+class _SampleListState extends State<SampleList> {
   final AuthService _auth = AuthService();
   List<Site> allSites = [];
   bool dataLoaded = false;
@@ -77,7 +77,8 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         backgroundColor: Colors.lightBlue,
         appBar: AppBar(
-          title: Text("Home"),
+          automaticallyImplyLeading: false,
+          title: Text("Sample List"),
           backgroundColor: Colors.blue,
           elevation: 0.0,
           actions: <Widget>[
@@ -99,8 +100,12 @@ class _HomeState extends State<Home> {
                       print("Nothing");
                     },
                     // title: Text(locations[index].location),
-                    title: Text(baseSamples[index].textureClass),
-                    subtitle: Text(baseSamples[index].sand.toString()),
+                    title: Text('Texture: ' + baseSamples[index].textureClass + '\n' + baseSamples[index].lat.toString() + ', ' + baseSamples[index].lon.toString()),
+                    subtitle: Text('Sand: ' + baseSamples[index].sand.toString()
+                        + ', Silt: ' + baseSamples[index].silt.toString()
+                        + ', Clay: ' +  baseSamples[index].clay.toString()
+                        + '\nDepth Upper: ' +  baseSamples[index].depthShallow.toString()
+                        + ', Depth Lower: '  + baseSamples[index].depthDeep.toString()),
                     /*leading: Text('1') CircleAvatar(
                       backgroundImage: AssetImage('assets/${locations[index].flag}'),
                     ),*/
@@ -116,7 +121,7 @@ class _HomeState extends State<Home> {
                 onPressed: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()),
+                    MaterialPageRoute(builder: (context) => AddSamplePage()),
                   );
                 },
                 icon: Icon(Icons.add),

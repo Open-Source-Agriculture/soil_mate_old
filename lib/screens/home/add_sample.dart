@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:texture_app/models/texture_models.dart';
-import 'package:texture_app/screens/home/home.dart';
+import 'package:texture_app/screens/home/sample_list.dart';
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/models/sample.dart';
 import 'package:texture_app/models/common_keys.dart';
@@ -28,22 +28,22 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home: MyHomePage(title: 'Add Sample'),
+      home: AddSamplePage(title: 'Add Sample'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class AddSamplePage extends StatefulWidget {
 
-  MyHomePage({Key key, this.title = 'Add Sample'}) : super(key: key);
+  AddSamplePage({Key key, this.title = 'Add Sample'}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _AddSamplePageState createState() => _AddSamplePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _AddSamplePageState extends State<AddSamplePage> {
   StreamSubscription _locationSubscription;
   Location _locationTracker = Location();
   Marker marker;
@@ -98,6 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool dataLoaded = false;
   String baseSiteKey =  "BaseSite";
   List<Sample> baseSamples = [];
+
+  TextureClass selectedTexture = AusClassification().loam;
 
   @override
   Widget build(BuildContext context) {
@@ -154,17 +156,26 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 FlatButton(
                   color: Colors.grey[300],
-                  onPressed: () {  },
+                  onPressed: () {
+                    selectedTexture = AusClassification().sandyLoam;
+                    setState(() {});
+                  },
                   child: Text(ausClassification.sandyLoam.name),
                 ),
                 FlatButton(
                   color: Colors.grey[300],
-                  onPressed: () {  },
+                  onPressed: () {
+                    selectedTexture = AusClassification().loam;
+                    setState(() {});
+                  },
                   child: Text(ausClassification.loam.name),
                 ),
                 FlatButton(
                   color: Colors.grey[300],
-                  onPressed: () {  },
+                  onPressed: () {
+                    selectedTexture = AusClassification().sandyClay;
+                    setState(() {});
+                  },
                   child: Text(ausClassification.sandyClay.name),
                 )
               ],
@@ -174,21 +185,31 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 FlatButton(
                   color: Colors.grey[300],
-                  onPressed: () {  },
+                  onPressed: () {
+                    selectedTexture = AusClassification().clay;
+                    setState(() {});
+                  },
                   child: Text(ausClassification.clay.name),
                 ),
                 FlatButton(
                   color: Colors.grey[300],
-                  onPressed: () {  },
+                  onPressed: () {
+                    selectedTexture = AusClassification().siltyClay;
+                    setState(() {});
+                  },
                   child: Text(ausClassification.siltyClay.name),
                 ),
                 FlatButton(
                   color: Colors.grey[300],
-                  onPressed: () {  },
+                  onPressed: () {
+                    selectedTexture = AusClassification().siltyLoam;
+                    setState(() {});
+                  },
                   child: Text(ausClassification.siltyLoam.name),
                 )
               ],
             ),
+            Text('Chosen texture is ' + selectedTexture.name),
             Row(
               children: [
                 Text('Depth Range '),
@@ -252,21 +273,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text(' cm'),
               ],
             ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text('Date'),
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DatePickerDemo()),
-                );
-              },
-            ),
+
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.location_searching),
+          child: Text('Submit'),
           onPressed: () {
             print("Pressed");
             print(sampledLat);
@@ -279,14 +291,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   sampledLat = locationDict[LAT];
                   sampledLon = locationDict[LON];
                   Sample s = Sample(
-                      lat: sampledLon,
+                      lat: sampledLat,
                       lon: sampledLon,
-                    textureClass: "lome",
-                    depthShallow: 2,
-                    depthDeep: 10,
-                    sand: 20,
-                    silt: 30,
-                    clay: 50
+                    textureClass: selectedTexture.name,
+                    depthShallow: depthUpper,
+                    depthDeep: depthLower,
+                    sand: selectedTexture.sand,
+                    silt: selectedTexture.silt,
+                    clay: selectedTexture.clay
                   );
                   print(s.getData().toString());
                   site.addSample(s);
@@ -295,7 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     await overrideSite(site);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Home()),
+                      MaterialPageRoute(builder: (context) => SampleList()),
                     );
                   }
                   saveDataPushHome();
@@ -304,7 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print('no gps data');
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Home()),
+                    MaterialPageRoute(builder: (context) => SampleList()),
                   );
                 }
 
