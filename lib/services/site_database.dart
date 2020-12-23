@@ -50,3 +50,24 @@ Future<bool> saveSite(Site site) async {
   }
   return siteExists;
 }
+
+Future<bool> overrideSite(Site site) async {
+  bool siteExists = false;
+  await appBoxes.load();
+//  print(site.name);
+//  print(site.classification);
+//  print(site.date);
+//  print(site.samples.map((s) => s.getData()).toList());
+  if (appBoxes.isLoaded){
+    Map<String, dynamic> siteMap = {
+      SITE_NAME: site.name,
+      TEXTURE_CLACIFICATION: site.classification,
+      DATE: site.date,
+      SAMPLES: site.samples.map((s) => s.getData()).toList()
+    };
+//    print(siteMap.toString());
+    appBoxes.queSiteBox.put(site.name,siteMap);
+    appBoxes.siteBox.put(site.name, siteMap);
+  }
+  return siteExists;
+}

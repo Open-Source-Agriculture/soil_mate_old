@@ -56,36 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Site site;
 
 
-  static final CameraPosition initialLocation = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+
 
   Future<Uint8List> getMarker() async {
     ByteData byteData = await DefaultAssetBundle.of(context).load("assets/car_icon.png");
     return byteData.buffer.asUint8List();
-  }
-
-  void updateMarkerAndCircle(LocationData newLocalData, Uint8List imageData) {
-    LatLng latlng = LatLng(newLocalData.latitude, newLocalData.longitude);
-    this.setState(() {
-      marker = Marker(
-          markerId: MarkerId("home"),
-          position: latlng,
-          rotation: newLocalData.heading,
-          draggable: false,
-          zIndex: 2,
-          flat: true,
-          anchor: Offset(0.5, 0.5),
-          icon: BitmapDescriptor.fromBytes(imageData));
-      circle = Circle(
-          circleId: CircleId("car"),
-          radius: newLocalData.accuracy,
-          zIndex: 1,
-          strokeColor: Colors.blue,
-          center: latlng,
-          fillColor: Colors.blue.withAlpha(70));
-    });
   }
 
   Future<Map<String,double>> getCurrentLocation() async {
@@ -94,29 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     try {
 
-      Uint8List imageData = await getMarker();
+//      Uint8List imageData = await getMarker();
       var location = await _locationTracker.getLocation();
-
-      updateMarkerAndCircle(location, imageData);
-
-      if (_locationSubscription != null) {
-        _locationSubscription.cancel();
-      }
+      lon = location.longitude;
+      lat = location.latitude;
 
 
-      _locationSubscription = _locationTracker.onLocationChanged.listen((newLocalData) {
-        if (_controller != null) {
-          sampledLat = newLocalData.latitude;
-          sampledLon = newLocalData.longitude;
-
-          _controller.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
-              bearing: 192.8334901395799,
-              target: LatLng(lat, lon),
-              tilt: 0,
-              zoom: 18.00)));
-          updateMarkerAndCircle(newLocalData, imageData);
-        }
-      });
 
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
@@ -134,13 +92,40 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+
+  List<Site> allSites = [];
+  bool dataLoaded = false;
+  String baseSiteKey =  "BaseSite";
+  List<Sample> baseSamples = [];
+
   @override
   Widget build(BuildContext context) {
-    site = Site(
-      name: DateTime.now().toIso8601String(),
-      classification: "Aus",
-      rawSamples: []
+
+    Site iSite = Site(
+        name: baseSiteKey,
+        classification: "aus",
+        rawSamples: []
     );
+
+
+    Future<void> loadData() async {
+      bool alreadySite = await saveSite(iSite);
+      if (alreadySite){
+        print("Cant use this name; already exists");
+      }
+      this.allSites = await getSites();
+      dataLoaded = true;
+      List<dynamic> baseSiteList = allSites.where((s) => s.name == baseSiteKey).toList();
+      Site baseSite = baseSiteList[0];
+      site = baseSite;
+      baseSamples = baseSite.samples;
+      print(baseSamples);
+      setState(() {});
+    }
+    if (!dataLoaded){
+      print("trying to load");
+      loadData();
+    }
 
 
     var txt2 = TextEditingController();
@@ -160,22 +145,8 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,  // or use fixed size like 200
-              height: MediaQuery.of(context).size.height*0.3,
-              child: GoogleMap(
-
-                mapType: MapType.hybrid,
-                initialCameraPosition: initialLocation,
-                markers: Set.of((marker != null) ? [marker] : []),
-                circles: Set.of((circle != null) ? [circle] : []),
-                onMapCreated: (GoogleMapController controller) {
-                  _controller = controller;
-                },
-
-              ),
-            ),
             Text('Texture Class'),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -318,8 +289,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                   print(s.getData().toString());
                   site.addSample(s);
-                  print(site.samples);
-//                  saveSite(site);
+                  print(site.samples.map((e) => e.textureClass));
+                  overrideSite(site);
 
                 }
 
