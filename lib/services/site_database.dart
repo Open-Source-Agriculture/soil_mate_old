@@ -26,8 +26,9 @@ Future<List<Site>> getSites() async {
   return sites;
 }
 
-bool saveSite(Site site){
+Future<bool> saveSite(Site site) async {
   bool siteExists = false;
+  await appBoxes.load();
 //  print(site.name);
 //  print(site.classification);
 //  print(site.date);

@@ -22,54 +22,48 @@ class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   List<Site> allSites = [];
   bool dataLoaded = false;
+  String baseSiteKey =  "BaseSite";
 
 
   @override
   Widget build(BuildContext context) {
     //Add samples to sites
     Site iSite = Site(
-        name: "Kips Paddock",
+        name: baseSiteKey,
         classification: "aus",
         rawSamples: []
     );
-    Sample s = Sample(
-        lat: 123.0,
-        lon: -33.0,
-        textureClass: "lome",
-        depthShallow: 0,
-        depthDeep: 10,
-        sand: 20,
-        silt: 30,
-        clay: 50
-    );
-    iSite.addSample(s);
-    bool alreadySite = saveSite(iSite);
-    if (alreadySite){
-      print("Cant use this name; already exists");
-    }
+
+
     Future<void> loadData() async {
+      bool alreadySite = await saveSite(iSite);
+      if (alreadySite){
+        print("Cant use this name; already exists");
+      }
       this.allSites = await getSites();
       print(this.allSites);
       dataLoaded = true;
+      print("Data loaded");
+//      List<dynamic> allSitesNames = allSites.map((s) => s.name).toList();
+//      print(allSitesNames);
+      List<dynamic> baseSiteList = allSites.where((s) => s.name == baseSiteKey).toList();
+      Site baseSite = baseSiteList[0];
+      List<Sample> baseSamples = baseSite.samples;
+      print("baseSamples");
+      print(baseSamples);
       setState(() {});
     }
     if (!dataLoaded){
+      print("trying to load");
       loadData();
     }
 
 
 
-//    print(this.allSites.length);
-//    if (this.allSites.length == 0){
-//      print("loading");
-//      setState(() {
-//        this.allSites = getSites();
-//      });
+
+//    if (allSitesNames.contains("BaseSite")){
+//      print("contains");
 //    }
-
-
-    List<dynamic> allSitesNames = allSites.map((s) => s.name).toList();
-    print(allSitesNames);
 
     return Container(
       child: Scaffold(
@@ -124,27 +118,13 @@ class _HomeState extends State<Home> {
                 label: Text('Add'),
             ),
             FlatButton.icon(
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ExportScreen()),
-                  );
-                },
-                icon: Icon(Icons.file_upload),
-                label: Text('Export')),
-            FlatButton.icon(
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ManageScreen()),
-                  );
-                },
-                icon: Icon(Icons.insert_drive_file),
-                label: Text('Manage')),
-            FlatButton.icon(
-                onPressed: (){},
-                icon: Icon(Icons.more_vert),
-                label: Text(''))
+              onPressed: (){
+                print("will delete");
+//                print(baseSamples);
+              },
+              icon: Icon(Icons.delete),
+              label: Text('Delete All'),
+            ),
           ],
         ),
       )
