@@ -8,11 +8,13 @@ import 'package:texture_app/models/user.dart';
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    if (user == null){
-      return Authenticate();
-    }else{
-      return Home();
-    }
+    return Home();
+//    // This is hidden for the minimal app
+//    final user = Provider.of<User>(context);
+//    if (user == null){
+//      return Authenticate();
+//    }else{
+//      return Home();
+//    }
   }
 }
