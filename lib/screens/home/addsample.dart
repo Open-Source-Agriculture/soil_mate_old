@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:texture_app/models/texture_models.dart';
+import 'package:texture_app/screens/home/home.dart';
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/models/sample.dart';
 import 'package:texture_app/models/common_keys.dart';
@@ -297,6 +298,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
               });
             });
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
 
           }),
     );
