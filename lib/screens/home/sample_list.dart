@@ -35,6 +35,13 @@ class _SampleListState extends State<SampleList> {
         rawSamples: []
     );
 
+    Color getColor(int sand, int silt, int clay) {
+    int R = (225*sand + 225*clay)~/100;
+    int G = (225*sand + 225*silt)~/100;
+    int B = (225*silt + 225*clay)~/100;
+    return Color.fromRGBO(R, G, B, 1);
+  }
+
 
     Future<void> loadData() async {
       bool alreadySite = await saveSite(iSite);
@@ -94,7 +101,8 @@ class _SampleListState extends State<SampleList> {
             itemBuilder: (context, index){
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
-                child: Card(
+                child: Container(
+                  color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay),
                   child: ListTile(
                     onTap: () {
                       print("Nothing");
