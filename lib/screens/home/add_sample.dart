@@ -14,6 +14,7 @@ import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/sample.dart';
 import 'package:texture_app/services/site_database.dart';
 
+import '../../models/texture_models.dart';
 import 'date.dart';
 
 void main() => runApp(MyApp());
@@ -162,7 +163,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
               children: [
                 Expanded(
                   child: FlatButton(
-                    color: Colors.yellow,
+                    color: AusClassification().sandyLoam.getColor(),
                     onPressed: () {
                       selectedTexture = AusClassification().sandyLoam;
                       setState(() {});
@@ -177,7 +178,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 SizedBox(width: 14),
                 Expanded(
                   child: FlatButton(
-                    color: Colors.brown,
+                    color: AusClassification().loam.getColor(),
                     onPressed: () {
                       selectedTexture = AusClassification().loam;
                       setState(() {});
@@ -188,7 +189,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 SizedBox(width: 14),
                 Expanded(
                   child: FlatButton(
-                    color: Colors.yellow[900],
+                    color: AusClassification().sandyClay.getColor(),
                     onPressed: () {
                       selectedTexture = AusClassification().sandyClay;
                       setState(() {});
@@ -203,7 +204,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
               children: [
                 Expanded(
                   child: FlatButton(
-                    color: Colors.orangeAccent,
+                    color: AusClassification().clay.getColor(),
                     onPressed: () {
                       selectedTexture = AusClassification().clay;
                       setState(() {});
@@ -214,7 +215,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 SizedBox(width: 14),
                 Expanded(
                   child: FlatButton(
-                    color: Colors.deepOrangeAccent[100],
+                    color: AusClassification().siltyClay.getColor(),
                     onPressed: () {
                       selectedTexture = AusClassification().siltyClay;
                       setState(() {});
@@ -225,7 +226,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 SizedBox(width: 14),
                 Expanded(
                   child: FlatButton(
-                    color: Colors.brown[200],
+                    color: AusClassification().siltyLoam.getColor(),
                     onPressed: () {
                       selectedTexture = AusClassification().siltyLoam;
                       setState(() {});
@@ -236,7 +237,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
               ],
             ),
             Text(
-                'Step 2) Please specify the depth range: ',
+                'Step 2) Please specify the depth range ',
               style: TextStyle(
                 fontSize: 20,
               ),

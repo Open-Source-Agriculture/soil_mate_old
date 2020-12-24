@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class AusClassification {
   TextureClass sandyLoam = TextureClass(name: 'Sandy Loam', sand: 70, silt: 20, clay: 10);
   TextureClass loam = TextureClass(name: 'Loam',sand: 65, silt: 10, clay: 25);
@@ -12,5 +14,11 @@ class TextureClass{
   final int silt;
   final int clay;
   final String name;
+  Color getColor() {
+    int R = (225*sand + 225*clay)~/100;
+    int G = (225*sand + 225*silt)~/100;
+    int B = (225*silt + 225*clay)~/100;
+    return Color.fromRGBO(R, G, B, 1);
+  }
   TextureClass({this.name, this.sand,this.silt,this.clay});
 }
