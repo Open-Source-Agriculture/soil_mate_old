@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -145,87 +146,110 @@ class _AddSamplePageState extends State<AddSamplePage> {
         title: Text(widget.title),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.fromLTRB(17, 20, 17, 50),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text('Texture Class'),
+            Text(
+              'Step 1) Please specify a soil texture',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FlatButton(
-                  color: Colors.grey[300],
-                  onPressed: () {
-                    selectedTexture = AusClassification().sandyLoam;
-                    setState(() {});
-                  },
-                  child: Text(ausClassification.sandyLoam.name),
+                Expanded(
+                  child: FlatButton(
+                    color: Colors.yellow,
+                    onPressed: () {
+                      selectedTexture = AusClassification().sandyLoam;
+                      setState(() {});
+                    },
+                    child: Text(
+                        ausClassification.sandyLoam.name,
+                        style: TextStyle(
+                        ),
+                    ),
+                  ),
                 ),
-                FlatButton(
-                  color: Colors.grey[300],
-                  onPressed: () {
-                    selectedTexture = AusClassification().loam;
-                    setState(() {});
-                  },
-                  child: Text(ausClassification.loam.name),
+                SizedBox(width: 14),
+                Expanded(
+                  child: FlatButton(
+                    color: Colors.brown,
+                    onPressed: () {
+                      selectedTexture = AusClassification().loam;
+                      setState(() {});
+                    },
+                    child: Text(ausClassification.loam.name),
+                  ),
                 ),
-                FlatButton(
-                  color: Colors.grey[300],
-                  onPressed: () {
-                    selectedTexture = AusClassification().sandyClay;
-                    setState(() {});
-                  },
-                  child: Text(ausClassification.sandyClay.name),
+                SizedBox(width: 14),
+                Expanded(
+                  child: FlatButton(
+                    color: Colors.yellow[900],
+                    onPressed: () {
+                      selectedTexture = AusClassification().sandyClay;
+                      setState(() {});
+                    },
+                    child: Text(ausClassification.sandyClay.name),
+                  ),
                 )
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FlatButton(
-                  color: Colors.grey[300],
-                  onPressed: () {
-                    selectedTexture = AusClassification().clay;
-                    setState(() {});
-                  },
-                  child: Text(ausClassification.clay.name),
+                Expanded(
+                  child: FlatButton(
+                    color: Colors.orangeAccent,
+                    onPressed: () {
+                      selectedTexture = AusClassification().clay;
+                      setState(() {});
+                    },
+                    child: Text(ausClassification.clay.name),
+                  ),
                 ),
-                FlatButton(
-                  color: Colors.grey[300],
-                  onPressed: () {
-                    selectedTexture = AusClassification().siltyClay;
-                    setState(() {});
-                  },
-                  child: Text(ausClassification.siltyClay.name),
+                SizedBox(width: 14),
+                Expanded(
+                  child: FlatButton(
+                    color: Colors.deepOrangeAccent[100],
+                    onPressed: () {
+                      selectedTexture = AusClassification().siltyClay;
+                      setState(() {});
+                    },
+                    child: Text(ausClassification.siltyClay.name),
+                  ),
                 ),
-                FlatButton(
-                  color: Colors.grey[300],
-                  onPressed: () {
-                    selectedTexture = AusClassification().siltyLoam;
-                    setState(() {});
-                  },
-                  child: Text(ausClassification.siltyLoam.name),
+                SizedBox(width: 14),
+                Expanded(
+                  child: FlatButton(
+                    color: Colors.brown[200],
+                    onPressed: () {
+                      selectedTexture = AusClassification().siltyLoam;
+                      setState(() {});
+                    },
+                    child: Text(ausClassification.siltyLoam.name),
+                  ),
                 )
               ],
             ),
-            Text('Chosen texture is ' + selectedTexture.name),
+            Text(
+                'Step 2) Please specify the depth range: ',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
             Row(
               children: [
-                Text('Depth Range '),
+                Text('Upper depth: '),
                 ConstrainedBox(
-                  constraints: BoxConstraints.tight(Size(55, 55)),
+                  constraints: BoxConstraints.tight(Size(55, 25)),
                   child: TextFormField(
                     maxLength: 3,
                     decoration: InputDecoration(
-                        border: InputBorder.none,
                         counterText: ''
-                    ),
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Oswald',
-                      color: Color(0xB3383838),
                     ),
                     // initialValue: att.toString(),
                     controller: txt2,
@@ -241,21 +265,19 @@ class _AddSamplePageState extends State<AddSamplePage> {
                     },
                   ),
                 ),
-                Text('to'),
+              ],
+            ),
+            Row(
+              children: [
+                Text('Lower depth: '),
                 ConstrainedBox(
-                  constraints: BoxConstraints.tight(Size(55, 55)),
+                  constraints: BoxConstraints.tight(Size(55, 25)),
                   child: TextFormField(
                     maxLength: 3,
                     decoration: InputDecoration(
-                        border: InputBorder.none,
                         counterText: ''
                     ),
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Oswald',
-                      color: Color(0xB3383838),
-                    ),
+
                     // initialValue: att.toString(),
                     controller: txt3,
                     // inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
@@ -270,15 +292,42 @@ class _AddSamplePageState extends State<AddSamplePage> {
                     },
                   ),
                 ),
-                Text(' cm'),
               ],
+            ),
+            Container(
+              height: 100,
+              width: 250,
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue[500], width: 3),
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.lightBlue[50],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'Sample Summary: ',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  Text(
+                      'Chosen texture is '
+                          + selectedTexture.name
+                          + '\n Depth range is ' + depthUpper.toString() + ' to ' + depthLower.toString()
+                  ),
+                ],
+              ),
             ),
 
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          child: Text('Submit'),
+      floatingActionButton: FloatingActionButton.extended(
+          icon: Icon(Icons.save),
+          label: Text('Save'),
           onPressed: () {
             print("Pressed");
             print(sampledLat);
