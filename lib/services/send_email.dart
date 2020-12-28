@@ -4,8 +4,8 @@ import 'package:csv/csv.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
+
 
 Future<String> get _localPath async {
   final directory = await getApplicationDocumentsDirectory();
@@ -16,17 +16,52 @@ Future<String> get _localPath async {
 
 Future<File> get _localFile async {
   final path = await _localPath;
-  return File('$path/temp.csv');
+  return File('$path/samples.csv');
 }
 
 
-Future<void> writeCSV(String csvString) async {
+Future<String> writeCSV(String csvString) async {
   final file = await _localFile;
   file.writeAsString(csvString);
-  String contents = await file.readAsString();
-  print("From file:");
-  print(contents);
+  return file.path;
 }
+
+
+
+
+
+Future<void> createEmailWithCSV(String csvContents) async {
+  String path = await writeCSV(csvContents);
+  print(path);
+
+  final MailOptions mailOptions = MailOptions(
+    body: 'See attached the texture samples',
+    subject: 'Texture samples',
+//    recipients: ['example@example.com'],
+//    isHTML: true,
+//    bccRecipients: ['other@example.com'],
+//    ccRecipients: ['third@example.com'],
+    attachments: [path, ],
+  );
+
+  final MailerResponse response = await FlutterMailer.send(mailOptions);
+//  switch (response) {
+//    case MailerResponse.saved: /// ios only
+//      platformResponse = 'mail was saved to draft';
+//      break;
+//    case MailerResponse.sent: /// ios only
+//      platformResponse = 'mail was sent';
+//      break;
+//    case MailerResponse.cancelled: /// ios only
+//      platformResponse = 'mail was cancelled';
+//      break;
+//    case MailerResponse.android:
+//      platformResponse = 'intent was successful';
+//      break;
+//    default:
+//      platformResponse = 'unknown';
+//      break;
+  }
 
 
 void sendEmail(Site site){
@@ -49,7 +84,8 @@ void sendEmail(Site site){
 
 
   String csv = const ListToCsvConverter().convert(allSamplesLists);
-  writeCSV(csv);
+  createEmailWithCSV(csv);
+
 
 
 
