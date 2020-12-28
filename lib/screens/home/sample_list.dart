@@ -4,6 +4,7 @@ import 'package:texture_app/screens/home/add_sample.dart';
 import 'package:texture_app/screens/home/managescreen.dart';
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/services/auth.dart';
+import 'package:texture_app/services/send_email.dart';
 import 'package:texture_app/services/site_database.dart';
 import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/sample.dart';
@@ -23,6 +24,7 @@ class _SampleListState extends State<SampleList> {
   List<Site> allSites = [];
   bool dataLoaded = false;
   String baseSiteKey =  "BaseSite";
+  Site baseSite;
   List<Sample> baseSamples = [];
 
 
@@ -55,7 +57,7 @@ class _SampleListState extends State<SampleList> {
 //      List<dynamic> allSitesNames = allSites.map((s) => s.name).toList();
 //      print(allSitesNames);
       List<dynamic> baseSiteList = allSites.where((s) => s.name == baseSiteKey).toList();
-      Site baseSite = baseSiteList[0];
+      baseSite = baseSiteList[0];
       baseSamples = baseSite.samples;
       print("baseSamples");
       print(baseSamples);
@@ -137,13 +139,22 @@ class _SampleListState extends State<SampleList> {
             ),
             FlatButton.icon(
               onPressed: (){
-                print("will delete");
                 print(baseSamples);
                 deleteSamples();
 
               },
               icon: Icon(Icons.delete),
               label: Text('Delete All'),
+
+            ),
+            FlatButton.icon(
+              onPressed: (){
+                print("Export Data");
+                sendEmail(baseSite);
+
+              },
+              icon: Icon(Icons.import_export),
+              label: Text('Export Data'),
 
             ),
           ],

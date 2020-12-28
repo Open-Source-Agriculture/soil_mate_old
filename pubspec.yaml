@@ -37,6 +37,8 @@ dependencies:
   hive: ^1.4.4
   path_provider: ^1.6.18
   hive_flutter: ^0.3.1
+  flutter_mailer: ^1.0.1
+  csv: ^4.1.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.8.1
