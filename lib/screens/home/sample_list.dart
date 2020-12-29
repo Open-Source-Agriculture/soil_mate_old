@@ -84,12 +84,17 @@ class _SampleListState extends State<SampleList> {
 
     return Container(
       child: Scaffold(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Sample List"),
-          backgroundColor: Colors.blue,
-          elevation: 0.0,
+          title: Text(
+            "Sample List",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          backgroundColor: Colors.grey[300],
+          elevation: 2.0,
           actions: <Widget>[
             FlatButton.icon(onPressed: () async {
               await _auth.signOut();
@@ -102,9 +107,13 @@ class _SampleListState extends State<SampleList> {
             itemCount: baseSamples.length,
             itemBuilder: (context, index){
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+                padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
                 child: Container(
-                  color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay), width: 3.0),
+                    color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay).withOpacity(0.7),
+                  ),
                   child: ListTile(
                     onTap: () {
                       print("Nothing");

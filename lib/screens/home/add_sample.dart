@@ -25,10 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Maps',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+
 
       home: AddSamplePage(title: 'Add Sample'),
     );
@@ -144,7 +141,14 @@ class _AddSamplePageState extends State<AddSamplePage> {
     AusClassification ausClassification = AusClassification();
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title,
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        iconTheme: IconThemeData( color: Colors. black),
+        backgroundColor: Colors.grey[300],
+        elevation: 2.0,
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(17, 20, 17, 50),
@@ -300,9 +304,9 @@ class _AddSamplePageState extends State<AddSamplePage> {
               width: 250,
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.blue[500], width: 3),
+                border: Border.all(color: selectedTexture.getColor(), width: 3),
                 borderRadius: BorderRadius.circular(20),
-                color: Colors.lightBlue[50],
+                color: selectedTexture.getColor().withOpacity(0.5),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
