@@ -4,6 +4,7 @@ import 'package:texture_app/screens/home/add_sample.dart';
 import 'package:texture_app/screens/home/managescreen.dart';
 import 'package:texture_app/services/app_hive.dart';
 import 'package:texture_app/services/auth.dart';
+import 'package:texture_app/services/send_email.dart';
 import 'package:texture_app/services/site_database.dart';
 import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/sample.dart';
@@ -23,6 +24,7 @@ class _SampleListState extends State<SampleList> {
   List<Site> allSites = [];
   bool dataLoaded = false;
   String baseSiteKey =  "BaseSite";
+  Site baseSite;
   List<Sample> baseSamples = [];
 
 
@@ -55,7 +57,7 @@ class _SampleListState extends State<SampleList> {
 //      List<dynamic> allSitesNames = allSites.map((s) => s.name).toList();
 //      print(allSitesNames);
       List<dynamic> baseSiteList = allSites.where((s) => s.name == baseSiteKey).toList();
-      Site baseSite = baseSiteList[0];
+      baseSite = baseSiteList[0];
       baseSamples = baseSite.samples;
       print("baseSamples");
       print(baseSamples);
@@ -82,12 +84,17 @@ class _SampleListState extends State<SampleList> {
 
     return Container(
       child: Scaffold(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Sample List"),
-          backgroundColor: Colors.blue,
-          elevation: 0.0,
+          title: Text(
+            "Sample List",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          backgroundColor: Colors.grey[300],
+          elevation: 2.0,
           actions: <Widget>[
             FlatButton.icon(onPressed: () async {
               await _auth.signOut();
@@ -100,9 +107,13 @@ class _SampleListState extends State<SampleList> {
             itemCount: baseSamples.length,
             itemBuilder: (context, index){
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+                padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
                 child: Container(
-                  color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay), width: 3.0),
+                    color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay).withOpacity(0.7),
+                  ),
                   child: ListTile(
                     onTap: () {
                       print("Nothing");
@@ -137,13 +148,22 @@ class _SampleListState extends State<SampleList> {
             ),
             FlatButton.icon(
               onPressed: (){
-                print("will delete");
                 print(baseSamples);
                 deleteSamples();
 
               },
               icon: Icon(Icons.delete),
               label: Text('Delete All'),
+
+            ),
+            FlatButton.icon(
+              onPressed: (){
+                print("Export Data");
+                sendEmail(baseSite);
+
+              },
+              icon: Icon(Icons.import_export),
+              label: Text('Export Data'),
 
             ),
           ],
