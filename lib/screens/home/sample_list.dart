@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:texture_app/screens/home/exportscreen.dart';
 import 'package:texture_app/screens/home/add_sample.dart';
-import 'package:texture_app/screens/home/managescreen.dart';
-import 'package:texture_app/services/app_hive.dart';
-import 'package:texture_app/services/auth.dart';
 import 'package:texture_app/services/send_email.dart';
 import 'package:texture_app/services/site_database.dart';
 import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/sample.dart';
-import 'package:texture_app/models/common_keys.dart';
-import 'package:texture_app/screens/home/site_overview.dart';
 import 'dart:async';
 
 
@@ -20,7 +14,6 @@ class SampleList extends StatefulWidget {
 }
 
 class _SampleListState extends State<SampleList> {
-  final AuthService _auth = AuthService();
   List<Site> allSites = [];
   bool dataLoaded = false;
   String baseSiteKey =  "BaseSite";
@@ -97,7 +90,7 @@ class _SampleListState extends State<SampleList> {
           elevation: 2.0,
           actions: <Widget>[
             FlatButton.icon(onPressed: () async {
-              await _auth.signOut();
+              print("Logout");
             },
                 icon: Icon(Icons.person),
                 label: Text("Logout"))
