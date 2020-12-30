@@ -29,6 +29,7 @@ class _PolygonMapState extends State<PolygonMap> {
   Location _locationTracker = Location();
   Marker marker;
   Circle circle;
+  Polygon polygon;
   GoogleMapController _controller;
   double sampledLat = 37.42796133580664;
   double sampledLon = -122.085749655962;
@@ -64,9 +65,17 @@ class _PolygonMapState extends State<PolygonMap> {
           circleId: CircleId("car"),
           radius: newLocalData.accuracy,
           zIndex: 1,
-          strokeColor: Colors.blue,
+          strokeColor: Color.fromRGBO(255, 0, 255, 0),
           center: latlng,
-          fillColor: Colors.blue.withAlpha(70));
+          fillColor: Color.fromRGBO(255, 0, 255, 1));
+      polygon = Polygon(
+        polygonId: PolygonId("shape"),
+        points: [LatLng(newLocalData.latitude+0.0002, newLocalData.longitude),LatLng(newLocalData.latitude, newLocalData.longitude+0.0002),LatLng(newLocalData.latitude-0.0002, newLocalData.longitude),LatLng(newLocalData.latitude, newLocalData.longitude-0.0002)],
+        strokeWidth: 2,
+        strokeColor: Color.fromRGBO(0, 255, 255, 1),
+        fillColor: Color.fromRGBO(0, 255, 255, 1)
+
+      );
     });
   }
 
@@ -152,6 +161,7 @@ class _PolygonMapState extends State<PolygonMap> {
                 initialCameraPosition: initialLocation,
                 markers: Set.of((marker != null) ? [marker] : []),
                 circles: Set.of((circle != null) ? [circle] : []),
+                polygons: Set.of((polygon != null) ? [polygon] : []),
                 onMapCreated: (GoogleMapController controller) {
                   _controller = controller;
                 },
