@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:texture_app/screens/home/exportscreen.dart';
 import 'package:texture_app/screens/home/addsample.dart';
 import 'package:texture_app/screens/home/managescreen.dart';
-import 'package:texture_app/services/app_hive.dart';
+import 'package:texture_app/screens/home/polygon_mapper.dart';
 import 'package:texture_app/services/auth.dart';
 import 'package:texture_app/services/site_database.dart';
 import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/sample.dart';
-import 'package:texture_app/models/common_keys.dart';
 import 'package:texture_app/screens/home/site_overview.dart';
 import 'dart:async';
 
@@ -27,46 +26,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //Add samples to sites
-    Site iSite = Site(
-        name: "Kips Paddock",
-        classification: "aus",
-        rawSamples: []
-    );
-    Sample s = Sample(
-        lat: 123.0,
-        lon: -33.0,
-        textureClass: "lome",
-        depthShallow: 0,
-        depthDeep: 10,
-        sand: 20,
-        silt: 30,
-        clay: 50
-    );
-    iSite.addSample(s);
-    bool alreadySite = saveSite(iSite);
-    if (alreadySite){
-      print("Cant use this name; already exists");
-    }
-    Future<void> loadData() async {
-      this.allSites = await getSites();
-      print(this.allSites);
-      dataLoaded = true;
-      setState(() {});
-    }
-    if (!dataLoaded){
-      loadData();
-    }
-
-
-
-//    print(this.allSites.length);
-//    if (this.allSites.length == 0){
-//      print("loading");
-//      setState(() {
-//        this.allSites = getSites();
-//      });
-//    }
-
 
     List<dynamic> allSitesNames = allSites.map((s) => s.name).toList();
     print(allSitesNames);
@@ -142,7 +101,12 @@ class _HomeState extends State<Home> {
                 icon: Icon(Icons.insert_drive_file),
                 label: Text('Manage')),
             FlatButton.icon(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PolygonMap()),
+                  );
+                },
                 icon: Icon(Icons.more_vert),
                 label: Text(''))
           ],
