@@ -89,11 +89,7 @@ class _SampleListState extends State<SampleList> {
           backgroundColor: Colors.grey[300],
           elevation: 2.0,
           actions: <Widget>[
-            FlatButton.icon(onPressed: () async {
-              print("Logout");
-            },
-                icon: Icon(Icons.person),
-                label: Text("Logout"))
+            
           ],
         ),
         body: ListView.builder(
