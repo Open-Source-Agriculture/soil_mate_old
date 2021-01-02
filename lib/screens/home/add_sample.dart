@@ -256,15 +256,15 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Sample Summary: ',
+                    'Sample Summary',
                     style: TextStyle(
                       fontSize: 20,
                     ),
                   ),
                   Text(
-                      'Chosen texture is '
+                      'Texture:        '
                           + selectedTexture.name
-                          + '\n Depth range is ' + depthUpper.toString() + ' to ' + depthLower.toString()
+                          + '\nDepth range:     ' + depthUpper.toString() + ' to ' + depthLower.toString()
                   ),
                 ],
               ),
