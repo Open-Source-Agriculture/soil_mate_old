@@ -98,7 +98,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
   String baseSiteKey =  "BaseSite";
   List<Sample> baseSamples = [];
 
-  TextureClass selectedTexture = AusClassification().loam;
+  TextureClass selectedTexture = AusClassification().getTextureList()[0];
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +127,14 @@ class _AddSamplePageState extends State<AddSamplePage> {
     if (!dataLoaded){
       print("trying to load");
       loadData();
+    }
+
+
+    Function setTexture(TextureClass tc){
+      this.selectedTexture = tc;
+      setState(() {
+        this.selectedTexture = tc;
+      });
     }
 
 
@@ -162,84 +170,19 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 fontSize: 20,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().sandyLoam.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().sandyLoam;
-                      setState(() {});
-                    },
-                    child: Text(
-                        ausClassification.sandyLoam.name,
-                        style: TextStyle(
-                        ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 14),
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().loam.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().loam;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.loam.name),
-                  ),
-                ),
-                SizedBox(width: 14),
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().sandyClay.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().sandyClay;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.sandyClay.name),
-                  ),
-                )
-              ],
+            Container(
+              height: 200,
+              child: GridView.count(
+                childAspectRatio: (3/1),
+                crossAxisCount: 3,
+                children: AusClassification().getTextureList().map((texture) => TextureButton(
+                    textureClass: texture,
+                    setTextureFunction: setTexture,
+                )).toList(),
+              ),
+
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().clay.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().clay;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.clay.name),
-                  ),
-                ),
-                SizedBox(width: 14),
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().siltyClay.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().siltyClay;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.siltyClay.name),
-                  ),
-                ),
-                SizedBox(width: 14),
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().siltyLoam.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().siltyLoam;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.siltyLoam.name),
-                  ),
-                )
-              ],
-            ),
+
             Text(
                 'Step 2) Please specify the depth range ',
               style: TextStyle(
@@ -380,6 +323,36 @@ class _AddSamplePageState extends State<AddSamplePage> {
 
 
           }),
+    );
+
+
+
+  }
+
+}
+
+
+class TextureButton extends StatelessWidget {
+  final TextureClass textureClass;
+  final Function setTextureFunction;
+
+
+
+  TextureButton({Key /*?*/ key, @required this.textureClass, @required this.setTextureFunction,}) : super(key: key){}
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      color: textureClass.getColor(),
+      onPressed: () {
+        print(this.textureClass.name);
+        this.setTextureFunction(this.textureClass);
+      },
+      child: Text(
+        textureClass.name,
+        style: TextStyle(
+        ),
+      ),
     );
   }
 }
