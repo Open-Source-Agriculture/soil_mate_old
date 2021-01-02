@@ -165,7 +165,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              'Step 1) Please specify a soil texture',
+              'Specify a soil texture',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -184,7 +184,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
             ),
 
             Text(
-                'Step 2) Please specify the depth range ',
+                'Specify the depth range',
               style: TextStyle(
                 fontSize: 20,
               ),
