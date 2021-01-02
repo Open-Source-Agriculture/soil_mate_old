@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+// i am going to add more textures below
 class AusClassification {
   TextureClass sandyLoam = TextureClass(name: 'Sandy Loam', sand: 70, silt: 20, clay: 10);
   TextureClass loam = TextureClass(name: 'Loam',sand: 65, silt: 10, clay: 25);
