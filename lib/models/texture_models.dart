@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-// i am going to add more textures below
 class AusClassification {
   TextureClass sandyLoam = TextureClass(name: 'Sandy Loam', sand: 65, silt: 23, clay: 12);
   TextureClass loam = TextureClass(name: 'Loam',sand: 40, silt: 40, clay: 20);
@@ -14,6 +13,10 @@ class AusClassification {
   TextureClass sandyClayLoam = TextureClass(name: 'Sandy Clay Loam',sand: 60, silt: 13, clay: 27);
   TextureClass loamySand = TextureClass(name: 'Loamy Sand',sand: 82, silt: 10, clay: 8);
   TextureClass sand = TextureClass(name: 'Sand',sand: 95, silt: 3, clay: 2);
+
+  List<TextureClass> getTextureList(){
+    return  [sandyLoam, loam, sandyClay, clay, siltyClay, siltyLoam, siltyClayLoam, silt, clayLoam, sandyClayLoam, loamySand, sand];
+  }
 
 }
 
