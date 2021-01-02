@@ -1,4 +1,7 @@
-# texture_app
+# soil_mate
+
+This branch "addingTextures" is where I attempt to give all texture classes, in the
+Australian Classification system, a sand, silt, and clay percentage.
 
 Ask Kip for the google-services.json file or look in firebase
 
