@@ -98,7 +98,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
   String baseSiteKey =  "BaseSite";
   List<Sample> baseSamples = [];
 
-  TextureClass selectedTexture = AusClassification().loam;
+  TextureClass selectedTexture = AusClassification().getTextureList()[0];
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +130,14 @@ class _AddSamplePageState extends State<AddSamplePage> {
     }
 
 
+    Function setTexture(TextureClass tc){
+      this.selectedTexture = tc;
+      setState(() {
+        this.selectedTexture = tc;
+      });
+    }
+
+
     var txt2 = TextEditingController();
     txt2.text = depthUpper.toString();
     txt2.selection = TextSelection.fromPosition(TextPosition(offset: depthUpper.toString().length));
@@ -151,101 +159,36 @@ class _AddSamplePageState extends State<AddSamplePage> {
         elevation: 2.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(17, 20, 17, 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+        padding: const EdgeInsets.fromLTRB(17, 30, 17, 30),
+        child: ListView(
+          children: <Widget>[
             Text(
-              'Step 1) Please specify a soil texture',
+              'Specify a soil texture',
               style: TextStyle(
                 fontSize: 20,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().sandyLoam.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().sandyLoam;
-                      setState(() {});
-                    },
-                    child: Text(
-                        ausClassification.sandyLoam.name,
-                        style: TextStyle(
-                        ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 14),
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().loam.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().loam;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.loam.name),
-                  ),
-                ),
-                SizedBox(width: 14),
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().sandyClay.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().sandyClay;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.sandyClay.name),
-                  ),
-                )
-              ],
+            SizedBox(height: 30),
+            Container(
+              height: 180,
+              child: GridView.count(
+                childAspectRatio: (3/1),
+                crossAxisCount: 3,
+                children: AusClassification().getTextureList().map((texture) => TextureButton(
+                    textureClass: texture,
+                    setTextureFunction: setTexture,
+                )).toList(),
+              ),
+
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().clay.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().clay;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.clay.name),
-                  ),
-                ),
-                SizedBox(width: 14),
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().siltyClay.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().siltyClay;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.siltyClay.name),
-                  ),
-                ),
-                SizedBox(width: 14),
-                Expanded(
-                  child: FlatButton(
-                    color: AusClassification().siltyLoam.getColor(),
-                    onPressed: () {
-                      selectedTexture = AusClassification().siltyLoam;
-                      setState(() {});
-                    },
-                    child: Text(ausClassification.siltyLoam.name),
-                  ),
-                )
-              ],
-            ),
+            SizedBox(height: 30),
             Text(
-                'Step 2) Please specify the depth range ',
+                'Specify the depth range',
               style: TextStyle(
                 fontSize: 20,
               ),
             ),
+            SizedBox(height: 30),
             Row(
               children: [
                 Text('Upper depth: '),
@@ -272,6 +215,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 ),
               ],
             ),
+            SizedBox(height: 30),
             Row(
               children: [
                 Text('Lower depth: '),
@@ -299,87 +243,126 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 ),
               ],
             ),
-            Container(
-              height: 100,
-              width: 250,
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                border: Border.all(color: selectedTexture.getColor(), width: 3),
-                borderRadius: BorderRadius.circular(20),
+            SizedBox(height: 30),
+            Center(
+              child: FlatButton(
+                padding: const EdgeInsets.all(15),
                 color: selectedTexture.getColor().withOpacity(0.5),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'Sample Summary: ',
-                    style: TextStyle(
-                      fontSize: 20,
+                shape: RoundedRectangleBorder(side: BorderSide(
+                    color: selectedTexture.getColor(),
+                    width: 2,
+                    style: BorderStyle.solid
+                ), borderRadius: BorderRadius.circular(15)),
+                onPressed:(){
+                  print("Pressed");
+                  print(sampledLat);
+                  print(sampledLon);
+                  Future<Map<String,double>> currentLocation =  getCurrentLocation();
+                  currentLocation.then((Map<String,double> locationDict){
+                    setState(() {
+                      print(locationDict.toString());
+                      if (locationDict[LAT] != null){
+                        sampledLat = locationDict[LAT];
+                        sampledLon = locationDict[LON];
+                        Sample s = Sample(
+                            lat: sampledLat,
+                            lon: sampledLon,
+                            textureClass: selectedTexture.name,
+                            depthShallow: depthUpper,
+                            depthDeep: depthLower,
+                            sand: selectedTexture.sand,
+                            silt: selectedTexture.silt,
+                            clay: selectedTexture.clay
+                        );
+                        print(s.getData().toString());
+                        site.addSample(s);
+                        print(site.samples.map((e) => e.textureClass));
+                        Future<void> saveDataPushHome() async {
+                          await overrideSite(site);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SampleList()),
+                          );
+                        }
+                        saveDataPushHome();
+
+                      } else {
+                        print('no gps data');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SampleList()),
+                        );
+                      }
+
+
+                    });
+                  });
+
+
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Confirm Sample',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  Text(
-                      'Chosen texture is '
-                          + selectedTexture.name
-                          + '\n Depth range is ' + depthUpper.toString() + ' to ' + depthLower.toString()
-                  ),
-                ],
+                    Text(
+                        'Texture:        '
+                            + selectedTexture.name
+                            + '\nDepth range:     ' + depthUpper.toString() + ' cm to ' + depthLower.toString() + ' cm',
+                      style: TextStyle(
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-          icon: Icon(Icons.save),
-          label: Text('Save'),
-          onPressed: () {
-            print("Pressed");
-            print(sampledLat);
-            print(sampledLon);
-            Future<Map<String,double>> currentLocation =  getCurrentLocation();
-            currentLocation.then((Map<String,double> locationDict){
-              setState(() {
-                print(locationDict.toString());
-                if (locationDict[LAT] != null){
-                  sampledLat = locationDict[LAT];
-                  sampledLon = locationDict[LON];
-                  Sample s = Sample(
-                      lat: sampledLat,
-                      lon: sampledLon,
-                    textureClass: selectedTexture.name,
-                    depthShallow: depthUpper,
-                    depthDeep: depthLower,
-                    sand: selectedTexture.sand,
-                    silt: selectedTexture.silt,
-                    clay: selectedTexture.clay
-                  );
-                  print(s.getData().toString());
-                  site.addSample(s);
-                  print(site.samples.map((e) => e.textureClass));
-                  Future<void> saveDataPushHome() async {
-                    await overrideSite(site);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SampleList()),
-                    );
-                  }
-                  saveDataPushHome();
-
-                } else {
-                  print('no gps data');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SampleList()),
-                  );
-                }
+    );
 
 
-              });
-            });
+
+  }
+
+}
 
 
-          }),
+class TextureButton extends StatelessWidget {
+  final TextureClass textureClass;
+  final Function setTextureFunction;
+
+
+
+  TextureButton({Key /*?*/ key, @required this.textureClass, @required this.setTextureFunction,}) : super(key: key){}
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: FlatButton(
+        padding: EdgeInsets.all(0),
+        color: textureClass.getColor().withOpacity(0.5),
+        shape: RoundedRectangleBorder(side: BorderSide(
+            color: textureClass.getColor(),
+            width: 2,
+            style: BorderStyle.solid
+        ), borderRadius: BorderRadius.circular(15)),
+        onPressed: () {
+          print(this.textureClass.name);
+          this.setTextureFunction(this.textureClass);
+        },
+        child: Text(
+          textureClass.name,
+          style: TextStyle(
+          ),
+        ),
+      ),
     );
   }
 }
