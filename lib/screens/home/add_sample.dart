@@ -159,17 +159,16 @@ class _AddSamplePageState extends State<AddSamplePage> {
         elevation: 2.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(17, 0, 17, 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+        padding: const EdgeInsets.fromLTRB(17, 30, 17, 30),
+        child: ListView(
+          children: <Widget>[
             Text(
               'Specify a soil texture',
               style: TextStyle(
                 fontSize: 20,
               ),
             ),
+            SizedBox(height: 30),
             Container(
               height: 180,
               child: GridView.count(
@@ -182,13 +181,14 @@ class _AddSamplePageState extends State<AddSamplePage> {
               ),
 
             ),
-
+            SizedBox(height: 30),
             Text(
                 'Specify the depth range',
               style: TextStyle(
                 fontSize: 20,
               ),
             ),
+            SizedBox(height: 30),
             Row(
               children: [
                 Text('Upper depth: '),
@@ -215,6 +215,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 ),
               ],
             ),
+            SizedBox(height: 30),
             Row(
               children: [
                 Text('Lower depth: '),
@@ -242,6 +243,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
                 ),
               ],
             ),
+            SizedBox(height: 30),
             Center(
               child: FlatButton(
                 padding: const EdgeInsets.all(15),
