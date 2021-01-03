@@ -19,6 +19,7 @@ class _SampleListState extends State<SampleList> {
   String baseSiteKey =  "BaseSite";
   Site baseSite;
   List<Sample> baseSamples = [];
+  List<Sample> reverseBaseSamples = [];
 
 
   @override
@@ -52,6 +53,7 @@ class _SampleListState extends State<SampleList> {
       List<dynamic> baseSiteList = allSites.where((s) => s.name == baseSiteKey).toList();
       baseSite = baseSiteList[0];
       baseSamples = baseSite.samples;
+      reverseBaseSamples = baseSamples.reversed.toList();
       print("baseSamples");
       print(baseSamples);
       setState(() {});
@@ -93,27 +95,28 @@ class _SampleListState extends State<SampleList> {
           ],
         ),
         body: ListView.builder(
-            itemCount: baseSamples.length,
+          reverse: true,
+            itemCount: reverseBaseSamples.length,
             itemBuilder: (context, index){
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay), width: 3.0),
-                    color: getColor(baseSamples[index].sand, baseSamples[index].silt, baseSamples[index].clay).withOpacity(0.7),
+                    border: Border.all(color: getColor(reverseBaseSamples[index].sand, reverseBaseSamples[index].silt, reverseBaseSamples[index].clay), width: 3.0),
+                    color: getColor(reverseBaseSamples[index].sand, reverseBaseSamples[index].silt, reverseBaseSamples[index].clay).withOpacity(0.7),
                   ),
                   child: ListTile(
                     onTap: () {
                       print("Nothing");
                     },
                     // title: Text(locations[index].location),
-                    title: Text('Texture: ' + baseSamples[index].textureClass + '\n' + baseSamples[index].lat.toString() + ', ' + baseSamples[index].lon.toString()),
-                    subtitle: Text('Sand: ' + baseSamples[index].sand.toString()
-                        + ', Silt: ' + baseSamples[index].silt.toString()
-                        + ', Clay: ' +  baseSamples[index].clay.toString()
-                        + '\nDepth Upper: ' +  baseSamples[index].depthShallow.toString()
-                        + ', Depth Lower: '  + baseSamples[index].depthDeep.toString()),
+                    title: Text('Texture: ' + reverseBaseSamples[index].textureClass + '\n' + reverseBaseSamples[index].lat.toString() + ', ' + reverseBaseSamples[index].lon.toString()),
+                    subtitle: Text('Sand: ' + reverseBaseSamples[index].sand.toString()
+                        + ', Silt: ' + reverseBaseSamples[index].silt.toString()
+                        + ', Clay: ' +  reverseBaseSamples[index].clay.toString()
+                        + '\nDepth Upper: ' +  reverseBaseSamples[index].depthShallow.toString()
+                        + ', Depth Lower: '  + reverseBaseSamples[index].depthDeep.toString()),
                     /*leading: Text('1') CircleAvatar(
                       backgroundImage: AssetImage('assets/${locations[index].flag}'),
                     ),*/

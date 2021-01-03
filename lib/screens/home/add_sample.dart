@@ -264,7 +264,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
                   Text(
                       'Texture:        '
                           + selectedTexture.name
-                          + '\nDepth range:     ' + depthUpper.toString() + ' to ' + depthLower.toString()
+                          + '\nDepth range:     ' + depthUpper.toString() + ' cm to ' + depthLower.toString() + ' cm'
                   ),
                 ],
               ),
