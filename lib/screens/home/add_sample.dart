@@ -342,15 +342,24 @@ class TextureButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      color: textureClass.getColor(),
-      onPressed: () {
-        print(this.textureClass.name);
-        this.setTextureFunction(this.textureClass);
-      },
-      child: Text(
-        textureClass.name,
-        style: TextStyle(
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: FlatButton(
+        padding: EdgeInsets.all(0),
+        color: textureClass.getColor().withOpacity(0.5),
+        shape: RoundedRectangleBorder(side: BorderSide(
+            color: textureClass.getColor(),
+            width: 2,
+            style: BorderStyle.solid
+        ), borderRadius: BorderRadius.circular(15)),
+        onPressed: () {
+          print(this.textureClass.name);
+          this.setTextureFunction(this.textureClass);
+        },
+        child: Text(
+          textureClass.name,
+          style: TextStyle(
+          ),
         ),
       ),
     );

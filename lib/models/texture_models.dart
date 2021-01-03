@@ -15,7 +15,7 @@ class AusClassification {
   TextureClass sand = TextureClass(name: 'Sand',sand: 95, silt: 3, clay: 2);
 
   List<TextureClass> getTextureList(){
-    return  [sandyLoam, loam, sandyClay, clay, siltyClay, siltyLoam, siltyClayLoam, silt, clayLoam, sandyClayLoam, loamySand, sand];
+    return  [sand, loamySand, sandyLoam, sandyClayLoam, sandyClay, loam, clayLoam, siltyLoam, silt, siltyClayLoam, siltyClay, clay];
   }
 
 }
