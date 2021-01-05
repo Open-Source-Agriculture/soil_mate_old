@@ -12,3 +12,4 @@ String TEXTURE_CLACIFICATION = 'texture_calcification';
 String SAMPLES = "samples";
 String DATE = "date";
 String ID = "id";
+String INCREMENT = "increment";
