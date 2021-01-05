@@ -28,7 +28,8 @@ class _SampleListState extends State<SampleList> {
     Site iSite = Site(
         name: baseSiteKey,
         classification: "aus",
-        rawSamples: []
+        rawSamples: [],
+        increment: 0,
     );
 
     Color getColor(int sand, int silt, int clay) {
@@ -111,12 +112,16 @@ class _SampleListState extends State<SampleList> {
                       print("Nothing");
                     },
                     // title: Text(locations[index].location),
-                    title: Text('Texture: ' + reverseBaseSamples[index].textureClass + '\n' + reverseBaseSamples[index].lat.toString() + ', ' + reverseBaseSamples[index].lon.toString()),
+                    title: Text('ID: '+ reverseBaseSamples[index].id.toString()
+                        + '    Texture: ' + reverseBaseSamples[index].textureClass
+                        + '\n' + reverseBaseSamples[index].lat.toString() + ', '
+                        + reverseBaseSamples[index].lon.toString()),
                     subtitle: Text('Sand: ' + reverseBaseSamples[index].sand.toString()
                         + ', Silt: ' + reverseBaseSamples[index].silt.toString()
                         + ', Clay: ' +  reverseBaseSamples[index].clay.toString()
                         + '\nDepth Upper: ' +  reverseBaseSamples[index].depthShallow.toString()
-                        + ', Depth Lower: '  + reverseBaseSamples[index].depthDeep.toString()),
+                        + ', Depth Lower: '  + reverseBaseSamples[index].depthDeep.toString()
+                    ),
                     /*leading: Text('1') CircleAvatar(
                       backgroundImage: AssetImage('assets/${locations[index].flag}'),
                     ),*/
