@@ -106,7 +106,8 @@ class _AddSamplePageState extends State<AddSamplePage> {
     Site iSite = Site(
         name: baseSiteKey,
         classification: "aus",
-        rawSamples: []
+        rawSamples: [],
+        increment: 0
     );
 
 
@@ -272,11 +273,14 @@ class _AddSamplePageState extends State<AddSamplePage> {
                             depthDeep: depthLower,
                             sand: selectedTexture.sand,
                             silt: selectedTexture.silt,
-                            clay: selectedTexture.clay
+                            clay: selectedTexture.clay,
+                            id: site.increment,
                         );
                         print(s.getData().toString());
                         site.addSample(s);
                         print(site.samples.map((e) => e.textureClass));
+                        site.increment = site.increment + 1;
+                        print(site.increment);
                         Future<void> saveDataPushHome() async {
                           await overrideSite(site);
                           Navigator.push(
