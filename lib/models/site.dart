@@ -1,4 +1,5 @@
 
+import 'package:texture_app/models/incrementer.dart';
 import 'package:texture_app/models/sample.dart';
 import 'package:texture_app/models/common_keys.dart';
 
@@ -9,10 +10,12 @@ class Site{
   List rawSamples;
   List<Sample> samples = [];
   var defaultList;
+  int increment;
+//  Incrementer incrementer = Incrementer();
 
 
 
-  Site({this.name, this.classification, this.rawSamples}){
+  Site({this.name, this.classification, this.rawSamples, this.increment}){
 //    this.name = name;
 //    this.classification = classification;// e[TEXTURE_CLACIFICATION];
 //    this.rawSamples = rawSamples;// e[SAMPLES].toList();
@@ -27,7 +30,8 @@ class Site{
       depthDeep: e[DEPTHDEEP],
       sand: e[SAND],
       silt: e[SILT],
-      clay: e[CLAY]
+      clay: e[CLAY],
+      id: e[ID],
 
     )).toList();
     samples = mysamples;
