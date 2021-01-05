@@ -16,7 +16,8 @@ Future<List<Site>> getSites() async {
       sites  = appBoxes.siteBox.keys.toList().map((e) => Site(
           name: appBoxes.siteBox.get(e)[SITE_NAME],
           classification: appBoxes.siteBox.get(e)[TEXTURE_CLACIFICATION],
-          rawSamples: appBoxes.siteBox.get(e)[SAMPLES].toList()
+          rawSamples: appBoxes.siteBox.get(e)[SAMPLES].toList(),
+          increment: appBoxes.siteBox.get(e)[INCREMENT],
       )).toList();
 
     }
@@ -38,7 +39,8 @@ Future<bool> saveSite(Site site) async {
       SITE_NAME: site.name,
       TEXTURE_CLACIFICATION: site.classification,
       DATE: site.date,
-      SAMPLES: site.samples.map((s) => s.getData()).toList()
+      SAMPLES: site.samples.map((s) => s.getData()).toList(),
+      INCREMENT :site.increment,
     };
 //    print(siteMap.toString());
     if (!appBoxes.siteBox.containsKey(site.name)){
@@ -63,7 +65,9 @@ Future<bool> overrideSite(Site site) async {
       SITE_NAME: site.name,
       TEXTURE_CLACIFICATION: site.classification,
       DATE: site.date,
-      SAMPLES: site.samples.map((s) => s.getData()).toList()
+      SAMPLES: site.samples.map((s) => s.getData()).toList(),
+      INCREMENT :site.increment,
+
     };
 //    print(siteMap.toString());
     appBoxes.queSiteBox.put(site.name,siteMap);
