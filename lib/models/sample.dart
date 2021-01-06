@@ -11,7 +11,9 @@ class Sample{
   final int sand;
   final int silt;
   final int clay;
-  Sample({this.lat, this.lon,this.textureClass, this.depthShallow, this.depthDeep, this.sand, this.silt, this.clay});
+  final int id;
+
+  Sample({this.lat, this.lon,this.textureClass, this.depthShallow, this.depthDeep, this.sand, this.silt, this.clay, this.id});
 
   Map<String,dynamic> getData(){
     return {
@@ -22,7 +24,8 @@ class Sample{
       DEPTHDEEP:this.depthDeep,
       SAND:this.sand,
       SILT:this.silt,
-      CLAY: this.clay
+      CLAY: this.clay,
+      ID: this.id
     };
   }
 

@@ -1,3 +1,4 @@
+import 'package:texture_app/models/common_keys.dart';
 import 'package:texture_app/models/sample.dart';
 import 'package:texture_app/models/site.dart';
 import 'package:csv/csv.dart';
@@ -16,7 +17,7 @@ Future<String> get _localPath async {
 
 Future<File> get _localFile async {
   final path = await _localPath;
-  return File('$path/samples.csv');
+  return File('$path/Soil_Mate_' + DateTime.now().toIso8601String() + '.csv');
 }
 
 
@@ -69,6 +70,7 @@ void sendEmail(Site site){
   List<Sample> samples = site.samples;
   List<List<String>> allSamplesLists = samples.map((s) {
                     List<String> sampleList = [
+                      s.id.toString(),
                       s.lat.toString(),
                       s.lon.toString(),
                       s.textureClass,
@@ -81,9 +83,9 @@ void sendEmail(Site site){
                     print(sampleList);
                     return sampleList;
                   }).toList();
-
-
-  String csv = const ListToCsvConverter().convert(allSamplesLists);
+  List<String> headers = [ID, LAT, LON, TEXTURECLASS, DEPTHSHALLOW, DEPTHDEEP, SAND, SILT, CLAY];
+  List<List<String>> headerAllSamplesLists = [headers] + allSamplesLists;
+  String csv = const ListToCsvConverter().convert(headerAllSamplesLists);
   createEmailWithCSV(csv);
 
 
