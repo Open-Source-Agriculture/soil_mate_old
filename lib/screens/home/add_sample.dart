@@ -322,8 +322,8 @@ class _AddSamplePageState extends State<AddSamplePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text('Confirm'),
-        icon: Icon(Icons.save),
+        label: Text('Submit'),
+        icon: Icon(Icons.done),
         elevation: 2,
         onPressed:(){
           print("Pressed");
