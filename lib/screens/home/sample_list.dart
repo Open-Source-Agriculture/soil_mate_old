@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:texture_app/screens/home/add_sample.dart';
 import 'package:texture_app/services/send_email.dart';
@@ -20,6 +21,8 @@ class _SampleListState extends State<SampleList> {
   Site baseSite;
   List<Sample> baseSamples = [];
   List<Sample> reverseBaseSamples = [];
+
+
 
 
   @override
@@ -69,6 +72,31 @@ class _SampleListState extends State<SampleList> {
       overrideSite(iSite);
       loadData();
 
+    }
+
+    createAlertDialog(BuildContext context) {
+      return showDialog(context: context, builder: (context) {
+        return AlertDialog(
+          title: Text('Delete all samples'),
+          content: Text('Are you sure you want to delete?'),
+          actions: [
+            MaterialButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(SampleList());
+              },
+            ),
+            MaterialButton(
+              child: Text('Confirm'),
+              onPressed: () {
+                print(baseSamples);
+                deleteSamples();
+                Navigator.of(context).pop(SampleList());
+              },
+            ),
+          ],
+        );
+      });
     }
 
 
@@ -145,9 +173,7 @@ class _SampleListState extends State<SampleList> {
             ),
             FlatButton.icon(
               onPressed: (){
-                print(baseSamples);
-                deleteSamples();
-
+                createAlertDialog(context);
               },
               icon: Icon(Icons.delete),
               label: Text('Delete All'),

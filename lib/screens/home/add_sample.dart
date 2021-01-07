@@ -285,87 +285,92 @@ class _AddSamplePageState extends State<AddSamplePage> {
             ),
             SizedBox(height: 30),
             Center(
-              child: FlatButton(
-                padding: const EdgeInsets.all(15),
-                color: selectedTexture.getColor().withOpacity(0.5),
-                shape: RoundedRectangleBorder(side: BorderSide(
+              child: Container(
+                width: 250,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: selectedTexture.getColor().withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
                     color: selectedTexture.getColor(),
                     width: 2,
-                    style: BorderStyle.solid
-                ), borderRadius: BorderRadius.circular(15)),
-                onPressed:(){
-                  print("Pressed");
-                  print(sampledLat);
-                  print(sampledLon);
-                  Future<Map<String,double>> currentLocation =  getCurrentLocation();
-                  currentLocation.then((Map<String,double> locationDict){
-                    setState(() {
-                      print(locationDict.toString());
-                      if (locationDict[LAT] != null){
-                        sampledLat = locationDict[LAT];
-                        sampledLon = locationDict[LON];
-                        Sample s = Sample(
-                            lat: sampledLat,
-                            lon: sampledLon,
-                            textureClass: selectedTexture.name,
-                            depthShallow: depthUpper,
-                            depthDeep: depthLower,
-                            sand: selectedTexture.sand,
-                            silt: selectedTexture.silt,
-                            clay: selectedTexture.clay,
-                            id: site.increment,
-                        );
-                        print(s.getData().toString());
-                        site.addSample(s);
-                        print(site.samples.map((e) => e.textureClass));
-                        site.increment = site.increment + 1;
-                        print(site.increment);
-                        Future<void> saveDataPushHome() async {
-                          await overrideSite(site);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => SampleList()),
-                          );
-                        }
-                        saveDataPushHome();
-
-                      } else {
-                        print('no gps data');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SampleList()),
-                        );
-                      }
-
-
-                    });
-                  });
-
-
-                },
+                  ),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      'Confirm Sample',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
+                  Text(
+                  'Sample Summary',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                  Text(
+                    'Texture:  '
+                        + selectedTexture.name
+                        + '\nDepth range:  ' + depthUpper.toString() + ' cm to ' + depthLower.toString() + ' cm'
+                        + '\nSample ID:  ' + site.increment.toString(),
+                    style: TextStyle(
                     ),
-                    Text(
-                        'Texture:        '
-                            + selectedTexture.name
-                            + '\nDepth range:     ' + depthUpper.toString() + ' cm to ' + depthLower.toString() + ' cm',
-                      style: TextStyle(
-                      ),
-                    ),
+                  ),
                   ],
                 ),
               ),
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Confirm'),
+        icon: Icon(Icons.save),
+        elevation: 2,
+        onPressed:(){
+          print("Pressed");
+          print(sampledLat);
+          print(sampledLon);
+          Future<Map<String,double>> currentLocation =  getCurrentLocation();
+          currentLocation.then((Map<String,double> locationDict){
+            setState(() {
+              print(locationDict.toString());
+              if (locationDict[LAT] != null){
+                sampledLat = locationDict[LAT];
+                sampledLon = locationDict[LON];
+                Sample s = Sample(
+                  lat: sampledLat,
+                  lon: sampledLon,
+                  textureClass: selectedTexture.name,
+                  depthShallow: depthUpper,
+                  depthDeep: depthLower,
+                  sand: selectedTexture.sand,
+                  silt: selectedTexture.silt,
+                  clay: selectedTexture.clay,
+                  id: site.increment,
+                );
+                print(s.getData().toString());
+                site.addSample(s);
+                print(site.samples.map((e) => e.textureClass));
+                site.increment = site.increment + 1;
+                print(site.increment);
+                Future<void> saveDataPushHome() async {
+                  await overrideSite(site);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SampleList()),
+                  );
+                }
+                saveDataPushHome();
+
+              } else {
+                print('no gps data');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SampleList()),
+                );
+              }
+            });
+          });
+        },
       ),
     );
 
