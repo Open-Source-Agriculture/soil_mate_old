@@ -1,7 +1,6 @@
 # soil_mate
 
-This branch "addingTextures" is where I attempt to give all texture classes, in the
-Australian Classification system, a sand, silt, and clay percentage.
+This branch "customizeID" is where I add the option for users to customize the starting number for their sample ID. THis branch also adds an alert Dialog Box
 
 Ask Kip for the google-services.json file or look in firebase
 

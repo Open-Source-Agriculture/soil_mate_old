@@ -53,7 +53,12 @@ class _AddSamplePageState extends State<AddSamplePage> {
   List<Sample> samples = [];
   int depthUpper = 0;
   int depthLower = 10;
-  Site site;
+  Site site = Site(
+      name: 'placeHolder',
+      classification: "aus",
+      rawSamples: [],
+      increment: 0
+  );
 
 
 
@@ -110,7 +115,6 @@ class _AddSamplePageState extends State<AddSamplePage> {
         increment: 0
     );
 
-
     Future<void> loadData() async {
       bool alreadySite = await saveSite(iSite);
       if (alreadySite){
@@ -147,6 +151,12 @@ class _AddSamplePageState extends State<AddSamplePage> {
     txt3.text = depthLower.toString();
     txt3.selection = TextSelection.fromPosition(TextPosition(offset: depthLower.toString().length));
 
+    var txt4 = TextEditingController();
+    txt4.text = site.increment.toString();
+    txt4.selection = TextSelection.fromPosition(TextPosition(offset: site.increment.toString().length));
+
+
+
     AusClassification ausClassification = AusClassification();
     return Scaffold(
       appBar: AppBar(
@@ -160,9 +170,10 @@ class _AddSamplePageState extends State<AddSamplePage> {
         elevation: 2.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(17, 30, 17, 30),
+        padding: const EdgeInsets.fromLTRB(17, 0, 17, 0),
         child: ListView(
           children: <Widget>[
+            SizedBox(height: 17),
             Text(
               'Specify a soil texture',
               style: TextStyle(
@@ -184,7 +195,7 @@ class _AddSamplePageState extends State<AddSamplePage> {
             ),
             SizedBox(height: 30),
             Text(
-                'Specify the depth range',
+                'Specify the depth range and sample ID',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -237,6 +248,34 @@ class _AddSamplePageState extends State<AddSamplePage> {
                       setState(() {
                         depthLower = int.parse(val);
                         print(depthLower);
+                      });
+
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            Row(
+              children: [
+                Text('Sample ID: '),
+                ConstrainedBox(
+                  constraints: BoxConstraints.tight(Size(100, 25)),
+                  child: TextFormField(
+                    maxLength: 5,
+                    decoration: InputDecoration(
+                        counterText: ''
+                    ),
+
+                    // initialValue: att.toString(),
+                    controller: txt4,
+                    // inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                    autovalidate: true,
+                    keyboardType: TextInputType.number,
+                    onChanged: (val){
+                      setState(() {
+                        site.increment = int.parse(val);
+                        print(site.increment);
                       });
 
                     },
