@@ -201,6 +201,10 @@ class _SampleListState extends State<SampleList> {
               onPressed: (){
                 print("Export Data");
                 sendEmail(baseSite);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Credits()),
+                );
 
               },
               icon: Icon(Icons.import_export),
