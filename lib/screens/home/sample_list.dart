@@ -6,6 +6,7 @@ import 'package:texture_app/services/site_database.dart';
 import 'package:texture_app/models/site.dart';
 import 'package:texture_app/models/sample.dart';
 import 'dart:async';
+import 'credits.dart';
 
 
 class SampleList extends StatefulWidget {
@@ -111,11 +112,28 @@ class _SampleListState extends State<SampleList> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text(
-            "Sample List",
-            style: TextStyle(
-              color: Colors.black,
-            ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Sample List",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              Container(
+                width: 50,
+                child: FlatButton(
+                  child: Icon(Icons.more_vert),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Credits()),
+                    );
+                  },
+                ),
+              )
+            ],
           ),
           backgroundColor: Colors.grey[300],
           elevation: 2.0,
