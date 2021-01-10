@@ -1,6 +1,6 @@
 # soil_mate
 
-This branch "customizeID" is where I add the option for users to customize the starting number for their sample ID. THis branch also adds an alert Dialog Box
+read about the app in this [article](https://open-source-agriculture.github.io/2021-01-09-soil-mate-texture-app/)
 
 Ask Kip for the google-services.json file or look in firebase
 
