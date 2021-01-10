@@ -61,7 +61,7 @@ class _CreditsState extends State<Credits> {
                   ),
                 ],
               ),
-              onPressed: () {_launchURLdiscord;},
+              onPressed: () {_launchURLdiscord();},
             ),
             RaisedButton(
               shape: RoundedRectangleBorder(
@@ -89,7 +89,7 @@ class _CreditsState extends State<Credits> {
                   ),
                 ],
               ),
-              onPressed: () {_launchURLpatreon;},
+              onPressed: () {_launchURLpatreon();},
             ),
             RaisedButton(
               color: Colors.white,
@@ -116,7 +116,7 @@ class _CreditsState extends State<Credits> {
                   ),
                 ],
               ),
-              onPressed: () {_launchURLgithub;},
+              onPressed: () {_launchURLgithub();},
             ),
             RaisedButton(
               color: Colors.white,
@@ -143,7 +143,7 @@ class _CreditsState extends State<Credits> {
                   ),
                 ],
               ),
-              onPressed: () {_launchURLwebsite;},
+              onPressed: () {_launchURLwebsite();},
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
