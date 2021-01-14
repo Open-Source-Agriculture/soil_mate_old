@@ -16,6 +16,7 @@ import 'package:texture_app/services/site_database.dart';
 
 import '../../models/texture_models.dart';
 import 'date.dart';
+import 'package:location_permissions/location_permissions.dart';
 
 void main() => runApp(MyApp());
 
@@ -326,6 +327,8 @@ class _AddSamplePageState extends State<AddSamplePage> {
         icon: Icon(Icons.done),
         elevation: 2,
         onPressed:(){
+          LocationPermissions().openAppSettings().then((bool hasOpened) =>
+              debugPrint('App Settings opened: ' + hasOpened.toString()));
           print("Pressed");
           print(sampledLat);
           print(sampledLon);
