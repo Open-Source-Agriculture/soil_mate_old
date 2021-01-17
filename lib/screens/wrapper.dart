@@ -11,7 +11,7 @@ class _WrapperState extends State<Wrapper> {
 
 
   Future<void> requestLocation() async {
-    if (await Permission.location.isGranted) {
+    if (await Permission.location.request().isGranted) {
       print("Granted");
     }else{
       // You can request multiple permissions at once.
